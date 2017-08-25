@@ -1,0 +1,97 @@
+body {
+  
+}
+
+/* PROFILE PAGE */
+.profile-page {
+  border: 1px solid black;
+  width: 600px;
+  margin: auto;
+}
+
+.profile-page:hover {
+  border: 1px solid blue;
+}
+
+.profile-pic {
+  margin: auto;
+  margin-top: 10px;
+  display: block;
+}
+
+.username {
+  text-align: center;
+}
+
+.questions {
+  margin: auto;
+  width: 400px;
+  text-align: center;
+  display: block;
+  border: 1px solid black;
+}
+
+.question {
+  margin-left: 4px;
+  margin-right: 4px;
+  display: block;
+  text-align: center;
+}
+
+p {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+/* DIRECTORY-ITEM */
+.directory-item img {
+  height: 100px;
+  width: 100px;
+}
+
+/* MAIN PAGE */
+.main-page {
+
+}
+
+.main-page img {
+  float: left;
+  /* height: 140px;
+  width: 100%; */
+
+  /* 20% of the viewport width */
+  /* width:20vw; 
+  height: 20vw; */
+
+  width:100%;
+  padding: auto;
+  padding-top:20%;
+  margin: auto;
+
+}
+
+.nav-bar {
+  margin: auto;
+  border: 1px solid black;
+}
+
+.feed {
+  /* float: left;
+  border: 1px solid black;
+  margin: auto;
+  padding: auto;
+  width: 80%;
+  height: 100%; */
+}
+
+.col-sm-2 {
+  border: 1px solid red;
+  margin: auto;
+  height: 100%;
+}
+
+.col-sm-offset-2 {
+  border: 2px solid green;
+  margin: auto;
+  height: 100%;
+}
