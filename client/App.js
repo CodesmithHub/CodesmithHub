@@ -1,6 +1,7 @@
 import React from 'react';
 import LogIn from './login.js';
 import SignUp from './signup.js';
+// import $ from ‘jquery’;
 
 
 
@@ -11,19 +12,26 @@ class App extends React.Component {
  constructor() {
    super();
    this.state = {
-     email:'',
-     password:''
+     firstname: '',
+     lastname: '',
+     email: '',
+     password: '',
+     hometown: '',
+     past: '',
+     future: '',
+     hobbies: '',
+     random: '',
    };
  }
 
  render() {
    return (
      <div>Dis be da App
-      <LogIn />
-      <SignUp />
+      <LogIn login={{email:this.state.email, password:this.state.password}}/>
+      <SignUp sign={this.state}/>
      </div>
 
    );
  }
 }
-export default App;
+export default App
