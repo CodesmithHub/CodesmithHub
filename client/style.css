@@ -7,13 +7,12 @@ table, th, td {
 }
 
 
-.table_head {
-  color: red;
-  background-color: rgb(0, 123, 181);
-  font-family: cursive;
+.header {
+  color: white;
+  background-color: blue;
 }
 
-.table_content {
+.tablecontent {
   background: GhostWhite;
 }
 
@@ -23,6 +22,6 @@ table, th, td {
 }
 
 #password {
-  height: 30;
+  height: 40;
   width: 200px;
 }
