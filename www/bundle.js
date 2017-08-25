@@ -22447,7 +22447,7 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        'Dis be da App is this twerking?'
+        'Dis be da App'
       );
     }
   }]);

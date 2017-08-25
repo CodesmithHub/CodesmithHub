@@ -26,6 +26,7 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.post('/createuser', userController.createUser);
 
+app.post('/login', userController.verifyUser);
 
 
 
