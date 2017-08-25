@@ -22438,6 +22438,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// import $ from ‘jquery’;
+
+
 /**
 * A counter button: tap the button to increase the count.
 */
@@ -22450,8 +22453,15 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
     _this.state = {
+      firstname: '',
+      lastname: '',
       email: '',
-      password: ''
+      password: '',
+      hometown: '',
+      past: '',
+      future: '',
+      hobbies: '',
+      random: ''
     };
     return _this;
   }
@@ -22463,8 +22473,8 @@ var App = function (_React$Component) {
         'div',
         null,
         'Dis be da App',
-        _react2.default.createElement(_login2.default, null),
-        _react2.default.createElement(_signup2.default, null)
+        _react2.default.createElement(_login2.default, { login: { email: this.state.email, password: this.state.password } }),
+        _react2.default.createElement(_signup2.default, { sign: this.state })
       );
     }
   }]);
@@ -22539,30 +22549,25 @@ var LogIn = function (_React$Component) {
                 'div',
                 { className: 'input' },
                 _react2.default.createElement(
-                  'label',
-                  { htmlFor: 'email' },
+                  'form',
+                  null,
                   _react2.default.createElement(
                     'b',
                     null,
                     'Email:'
-                  )
-                ),
-                _react2.default.createElement('input', { type: 'text', id: 'email' })
-              ),
-              _react2.default.createElement('br', null),
-              _react2.default.createElement(
-                'div',
-                { className: 'input' },
-                _react2.default.createElement(
-                  'label',
-                  { htmlFor: 'password' },
+                  ),
+                  ' ',
+                  _react2.default.createElement('input', { type: 'text', id: 'email', value: this.props.email }),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement('br', null),
                   _react2.default.createElement(
                     'b',
                     null,
                     'Password:'
-                  )
-                ),
-                _react2.default.createElement('input', { type: 'password', id: 'password' })
+                  ),
+                  ' ',
+                  _react2.default.createElement('input', { type: 'text', id: 'password', value: this.props.password })
+                )
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement('br', null),
@@ -22626,6 +22631,21 @@ var SignUp = function (_React$Component) {
 
   _createClass(SignUp, [{
     key: 'render',
+
+
+    // componentDidMount(
+    //   $.ajax({
+    //     type: 'POST',
+    //     url: 'http://localhost:3000/createuser',
+    //     data: data,
+    //   })
+    // )
+    //
+    //    data = {
+    //      email: this.props.email,
+    //      password: this.props.password
+    //    }
+
     value: function render() {
 
       return _react2.default.createElement(
@@ -22653,30 +22673,88 @@ var SignUp = function (_React$Component) {
                 'div',
                 { className: 'input' },
                 _react2.default.createElement(
-                  'label',
-                  { htmlFor: 'email' },
+                  'form',
+                  null,
+                  _react2.default.createElement(
+                    'b',
+                    null,
+                    'First Name:'
+                  ),
+                  ' ',
+                  _react2.default.createElement('input', { type: 'text', id: 'firstname', value: this.props.firstname }),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement(
+                    'b',
+                    null,
+                    'Last Name:'
+                  ),
+                  ' ',
+                  _react2.default.createElement('input', { type: 'text', id: 'lastname', value: this.props.lastname }),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement('br', null),
                   _react2.default.createElement(
                     'b',
                     null,
                     'Email:'
-                  )
-                ),
-                _react2.default.createElement('input', { type: 'text', id: 'email' })
-              ),
-              _react2.default.createElement('br', null),
-              _react2.default.createElement(
-                'div',
-                { className: 'input' },
-                _react2.default.createElement(
-                  'label',
-                  { htmlFor: 'password' },
+                  ),
+                  ' ',
+                  _react2.default.createElement('input', { type: 'text', id: 'email', value: this.props.email }),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement('br', null),
                   _react2.default.createElement(
                     'b',
                     null,
-                    'New Password:'
-                  )
-                ),
-                _react2.default.createElement('input', { type: 'password', id: 'password' })
+                    'Password:'
+                  ),
+                  ' ',
+                  _react2.default.createElement('input', { type: 'text', id: 'password', value: this.props.password }),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement(
+                    'b',
+                    null,
+                    'Hometown:'
+                  ),
+                  ' ',
+                  _react2.default.createElement('input', { type: 'text', id: 'hometown', value: this.props.hometown }),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement(
+                    'b',
+                    null,
+                    'What were you doing before Codesmith:'
+                  ),
+                  ' ',
+                  _react2.default.createElement('input', { type: 'text', id: 'past', value: this.props.past }),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement(
+                    'b',
+                    null,
+                    'Furturn Goals:'
+                  ),
+                  ' ',
+                  _react2.default.createElement('input', { type: 'text', id: 'future', value: this.props.future }),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement(
+                    'b',
+                    null,
+                    'Hobbies:'
+                  ),
+                  ' ',
+                  _react2.default.createElement('input', { type: 'text', id: 'hobbies', value: this.props.hobbies }),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement(
+                    'b',
+                    null,
+                    'Random Facts:'
+                  ),
+                  ' ',
+                  _react2.default.createElement('input', { type: 'text', id: 'random', value: this.props.random })
+                )
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement('br', null),
@@ -22737,7 +22815,7 @@ exports = module.exports = __webpack_require__(190)(undefined);
 
 
 // module
-exports.push([module.i, "table {\n    border-collapse: collapse;\n}\n\ntable, th, td {\n    border: 1px solid black;\n}\n\n\n.table_head {\n  color: red;\n  background-color: rgb(0, 123, 181);\n  font-family: cursive;\n}\n\n.table_content {\n  background: GhostWhite;\n}\n\n#email {\n  height: 40;\n  width: 200px;\n}\n\n#password {\n  height: 30;\n  width: 200px;\n}\n", ""]);
+exports.push([module.i, "table {\n    border-collapse: collapse;\n}\n\ntable, th, td {\n    border: 1px solid black;\n}\n\n\n.header {\n  color: white;\n  background-color: blue;\n}\n\n.tablecontent {\n  background: GhostWhite;\n}\n\n#email {\n  height: 40;\n  width: 200px;\n}\n\n#password {\n  height: 40;\n  width: 200px;\n}\n", ""]);
 
 // exports
 
