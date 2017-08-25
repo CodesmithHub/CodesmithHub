@@ -3,10 +3,16 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const webpackConfig = require('./../webpack.config.js');
 const app = express();
- 
+const { Client } = require('pg');
+const connectionString = 'postgres://taviagze:xhNoQjlMqnEg86XbeWnAyTN-TEl_Dqyc@stampy.db.elephantsql.com:5432/taviagze';
+const pg = new Client({ connectionString: connectionString });
+const userController = require('./userController.js');
+const bodyParser = require('body-parser');
+
 const compiler = webpack(webpackConfig);
  
 app.use(express.static(__dirname + './../www'));
+app.use(bodyParser.json());
  
 app.use(webpackDevMiddleware(compiler, {
   hot: true,
@@ -17,6 +23,15 @@ app.use(webpackDevMiddleware(compiler, {
   },
   historyApiFallback: true,
 }));
+
+app.post('/createuser', userController.createUser);
+
+
+
+
+
+
+
  
 const server = app.listen(3000, function() {
   const host = server.address().address;
