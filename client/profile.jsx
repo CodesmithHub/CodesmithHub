@@ -19,15 +19,15 @@ class ProfilePage extends Component {
         <h1 className="username">{this.props.username}</h1>
         <div className="questions">
           <h4 className="question">Where do you consider yourself from?</h4>
-          <p>{this.props.q1}</p>
+          <p>{this.props.hometown}</p>
           <h4 className="question">What were you doing before Codesmith?</h4>
-          <p>{this.props.q2}</p>
+          <p>{this.props.past}</p>
           <h4 className="question">What do you want to do with your coding skills?</h4>
-          <p>{this.props.q3}</p>
+          <p>{this.props.future}</p>
           <h4 className="question">What are your passions and hobbies?</h4>
-          <p>{this.props.q4}</p>
+          <p>{this.props.hobbies}</p>
           <h4 className="question">What is a fun or random fact about yourself?</h4>
-          <p>{this.props.q5}</p>
+          <p>{this.props.random}</p>
         </div>
       </div>
     );
