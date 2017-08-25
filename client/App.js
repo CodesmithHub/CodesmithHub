@@ -1,4 +1,8 @@
 import React from 'react';
+import LogIn from './login.js';
+import SignUp from './signup.js';
+
+
 
 /**
 * A counter button: tap the button to increase the count.
@@ -6,12 +10,19 @@ import React from 'react';
 class App extends React.Component {
  constructor() {
    super();
-   this.state = {};
+   this.state = {
+     email:'',
+     password:''
+   };
  }
 
  render() {
    return (
-     <div>Dis be da App</div>
+     <div>Dis be da App
+      <LogIn />
+      <SignUp />
+     </div>
+
    );
  }
 }

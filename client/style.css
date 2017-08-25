@@ -1,0 +1,28 @@
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+
+.table_head {
+  color: red;
+  background-color: rgb(0, 123, 181);
+  font-family: cursive;
+}
+
+.table_content {
+  background: GhostWhite;
+}
+
+#email {
+  height: 40;
+  width: 200px;
+}
+
+#password {
+  height: 30;
+  width: 200px;
+}
