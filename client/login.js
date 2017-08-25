@@ -14,16 +14,14 @@ class LogIn extends React.Component {
           <tr>
             <td className='tableContent'>
               <div className='input'>
-                <label htmlFor='email'><b>Email:</b></label>
-                <input type='text' id='email'/>
-              </div>
-              <br/>
-              <div className= 'input'>
-                <label htmlFor='password'><b>Password:</b></label>
-                <input type='password' id='password'/>
+                <form>
+                  <b>Email:</b> <input type='text' id='email' value={this.props.email}/>
+                  <br/><br/>
+                  <b>Password:</b> <input type='text' id='password'value={this.props.password}/>
+                </form>
               </div>
               <br/><br/>
-              <button>LogIn</button>
+              <button type='submit'>LogIn</button>
               <button>SignUp?</button>
               </td>
               </tr>
@@ -38,4 +36,4 @@ class LogIn extends React.Component {
 
 
 
-export default LogIn;
+export default LogIn
