@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import { render } from 'react-dom'
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import SignUp from './signup.js';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 class LogIn extends React.Component {
 
@@ -23,18 +25,23 @@ render() {
             <td className='tableContent'>
               <div className='input'>
                 <form>
-                  <b>Email:</b> <input type='text' id='loginEmail' />
+                  <b>Email:</b> <input type='text' id='loginEmail' placeholder='email'/>
                   <br/><br/>
-                  <b>Password:</b> <input type='password' id='loginPassword'/>
+                  <b>Password:</b> <input type='password' id='loginPassword' placeholder='password'/>
                 </form>
               </div>
               <br/><br/>
               <button type='submit' onClick={this.loginInfo}>LogIn</button>
-              <button>SignUp?</button>
+              <button>
+                <Link to='/signup'>Signup</Link>
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
+      <div>
+      {this.props.children}
+      </div>
     </div>
   )
 
@@ -42,7 +49,7 @@ render() {
 
 
 componentDidMount() {
-  this.loginInfo();
+
 }
 
   loginInfo() {

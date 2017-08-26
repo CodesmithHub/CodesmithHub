@@ -28,9 +28,9 @@ class SignUp extends React.Component {
                       <br/><br/>
                       <b>Last Name:</b> <input type='text' id='lastname'/>
                       <br/><br/>
-                      <b>Email:</b> <input type='text' id='email'/>
+                      <b>Email:</b> <input type='text' id='email' placeholder='email'/>
                       <br/><br/>
-                      <b>Password:</b> <input type='password' id='password'/>
+                      <b>Password:</b> <input type='password' id='password' placeholder='password'/>
                       <br/><br/>
                       <b>Where do you consider yourself from?</b> <input type='text' id='hometown'/>
                       <br/><br/>
