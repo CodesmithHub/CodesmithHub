@@ -3,6 +3,12 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import MainPage from './mainPage.jsx';
 import LogIn from './login.js';
 import SignUp from './signup.js';
+import Directory from './directory.jsx';
+import ProfilePage from './profile.jsx';
+import NewsFeed from './newsFeed.jsx';
+
+
+
 
 const testData = {
   username: 'David Sally',
@@ -22,7 +28,7 @@ const items = [
 const item1 = items[0];
 const item2 = items[1];
 const item3 = items[2];
-const user = testData[0];
+const user = testData;
 
 class App extends React.Component {
   constructor() {
@@ -32,9 +38,12 @@ class App extends React.Component {
       selectedPage: 'Feed',
       feedItems: [item1, item2, item3],
       user,
+      selectedUser: user,
     };
     this.changeView = this.changeView.bind(this);
     this.updateStatus = this.updateStatus.bind(this);
+    this.updateDirectory = this.updateDirectory.bind(this);
+    this.viewProfile = this.viewProfile.bind(this);
   }
 
   /**
@@ -43,7 +52,7 @@ class App extends React.Component {
    * @param {string} buttonName
    */
   changeView(buttonName) {
-    console.log(`name: ${buttonName}`);
+    console.log(`---> ${buttonName}`);
     this.setState({ selectedPage: buttonName });
   }
 
@@ -54,46 +63,52 @@ class App extends React.Component {
    */
   updateStatus(e) {
     e.preventDefault();
-    // if (value.key == 'Enter') {
-      console.log(e);
-    // }
-    // if (e.key === 'Enter') { // enter key
-    //   console.log(`enter key pressed: `);
-    // }
-    // let newFeed = this.state.feedItems;
-    // newFeed.unshift(newItem);
-    // this.setState({ feedItems: newFeed });
+    if (e.key === 'Enter') {
+      console.log('submit data...');
+    }
   }
 
-  // handle: function(e) {
-  //   e.preventDefault();
-  //   var data = {
-  //     message: React.findDOMNode(this.refs.message).value.trim(),
-  //     created_by: 'David $ally',
-  //   };
-  //   React.findDOMNode(this.refs.message).value = '';
-  //   var that = this;
-  //   this.post(data).done(function(res) {
-  //     that.props.update(res);
-  //   });
-  // },
+  /** this updates the directory, the server response from a GET request is passed in */
+  updateDirectory(newDirectory) {
+    this.setState({ directory: newDirectory });
+  }
 
+  /** go to profile page */
+  viewProfile(userID) {
+    let selectedUser;
+    // find userID in directory
+    for (let i = 0; i < this.state.directory.length; i += 1) {
+      const user2 = this.state.directory[i];
+      if (user2.id === userID) {
+        selectedUser = user2;
+        console.log(selectedUser);
+      }
+    }
+    selectedUser.username = selectedUser.firstname + ' ' + selectedUser.lastname;
+    console.log(`---> ${selectedUser.username}`);
+
+    this.setState({ selectedPage: 'ViewPage', selectedUser: selectedUser });
+  }
 
   render() {
-
+    // <BrowserRouter>
+    //   <div>
+    //   <Route path='/' component={App}/>
+    //   <Route path='/signup' component={SignUp}/>
+    //   <Route path='/main' component={MainPage}/>
+    //   <Route path='/main/directory' component={Directory}/>
+    //   </div>
+    // </BrowserRouter>,
     // UNCOMMENT one of the following views to start
     return (
       <div>Dis be da App
-
-      { <MainPage
-        user={this.state.user}
-        imgURL={this.state.directory[0].imgURL}
-        selectedPage={this.state.selectedPage}
-        directory={this.state.directory}
-        feedItems={this.state.feedItems}
-        changeView={this.changeView}
-        updateStatus={this.updateStatus}
-      /> }
+        <BrowserRouter>
+          <div>
+            <Route exact path='/' component={LogIn}/>
+            <Route exact path='/signup' component={SignUp}/>
+            <Route path='/main' component={MainPage}/>
+            </div>
+        </BrowserRouter>
       </div>
     );
   }
@@ -101,15 +116,29 @@ class App extends React.Component {
 
 export default App
 
-// <LogIn/>
-{/* <MainPage
-  user={this.state.user}
-  imgURL={this.state.directory[0].imgURL}
-  selectedPage={this.state.selectedPage}
-  directory={this.state.directory}
-  feedItems={this.state.feedItems}
-  changeView={this.changeView}
-  updateStatus={this.updateStatus}
-/> */}
+// <SignUp />
+//   <MainPage
+//     user={this.state.user}
+//     imgURL={this.state.directory[0].imgURL}
+//     selectedPage={this.state.selectedPage}
+//     directory={this.state.directory}
+//     feedItems={this.state.feedItems}
+//     changeView={this.changeView}
+//     updateStatus={this.updateStatus}
+//     updateDirectory={this.updateDirectory}
+//     viewProfile={this.viewProfile}
+//     selectedUser={this.state.selectedUser}
+//   />
 
-{/* <SignUp /> */}
+// <Directory
+//   user={this.state.user}
+//   imgURL={this.state.directory[0].imgURL}
+//   selectedPage={this.state.selectedPage}
+//   directory={this.state.directory}
+//   feedItems={this.state.feedItems}
+//   changeView={this.changeView}
+//   updateStatus={this.updateStatus}
+//   updateDirectory={this.updateDirectory}
+//   viewProfile={this.viewProfile}
+//   selectedUser={this.state.selectedUser}
+// />

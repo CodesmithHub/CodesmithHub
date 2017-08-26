@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 class ProfilePage extends Component {
 
   render() {
+    console.log('username: ', this.props.username)
     return (
       <div className="profile-page">
         <img

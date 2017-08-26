@@ -1,17 +1,23 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
+import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
 
 class SignUp extends React.Component {
 
   constructor() {
-
     super();
-
+    this.state = {loggedIn: false}
     this.userInfo = this.userInfo.bind(this)
   }
 
+
   render() {
 
+    if (this.state.loggedIn) {
+      return (
+        <Redirect to='/main'/>
+      )
+    }
 
     return (
       <div>
@@ -45,6 +51,9 @@ class SignUp extends React.Component {
                 </div>
                 <br/><br/>
                 <button type='submit' onClick={this.userInfo}>CreateAccount</button>
+                <button>
+                  <Link to='/'>Login</Link>
+                </button>
                 </td>
                 </tr>
           </tbody>
@@ -57,7 +66,8 @@ class SignUp extends React.Component {
 
   }
 
-    userInfo() {
+    userInfo(e) {
+      e.preventDefault();
       let data = {
         firstname: document.getElementById('firstname').value,
         lastname: document.getElementById('lastname').value,
@@ -71,7 +81,8 @@ class SignUp extends React.Component {
       }
 
       axios.post('/createuser', data)
-      .then(function (response) {
+      .then((response) => {
+        if (response.status === 200) this.setState({loggedIn: true});
         console.log(response);
       })
       .catch(function (error) {

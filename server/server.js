@@ -28,9 +28,11 @@ app.post('/createuser', userController.createUser);
 
 app.post('/login', userController.verifyUser);
 
+app.get('/users', userController.grabUsers);
 
+app.post('/feedposts', userController.grabPosts);
 
-
+app.post('/newpost', userController.addPost);
 
 
  

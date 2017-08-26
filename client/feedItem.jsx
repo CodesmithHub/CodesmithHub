@@ -6,7 +6,6 @@ class FeedItem extends Component {
     return (
       <li className="feed-item">
         <img src={this.props.imgURL} alt={this.props.username + "'s picture"} />
-        <br />
         <span>{this.props.username}    {this.props.message}</span>
       </li>
     );

@@ -5,7 +5,6 @@ import Button from './button.jsx';
 import TextField from './textField.jsx';
 import NewsFeed from './newsFeed.jsx';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import SignUp from './signup.js';
 
 
 
@@ -21,34 +20,11 @@ import SignUp from './signup.js';
 
 class MainPage extends Component {
 
+
+
   render() {
-    console.log('hello');
     let feed;
 
-    // DIRECTORY
-    if (this.props.selectedPage === 'Directory') {
-      feed = <Directory listItems={this.props.directory} />;
-    }
-
-    // PROFILE PAGE
-    else if (this.props.selectedPage === 'Profile') {
-      console.log('--> directory');
-      feed = (<ProfilePage
-        username={this.props.user.username}
-        hometown={this.props.user.hometown}
-        past={this.props.user.past}
-        future={this.props.user.future}
-        hobbies={this.props.user.hobbies}
-        random={this.props.user.random}
-        imgURL={this.props.user.imgURL}
-      />);
-    }
-
-    // NEWS FEED
-    else if (this.props.selectedPage === 'Feed') {
-      console.log('--> feed');
-      feed = <NewsFeed feedItems={this.props.feedItems} />;
-    }
 
     return (
       <div className="main-page">
@@ -57,8 +33,8 @@ class MainPage extends Component {
 
         {/* profile pic / chat */}
         <div className="list-group col-sm-2">
-          <img src={this.props.imgURL} onClick={()=> {this.props.changeView('Profile')}} />
-          <TextField />
+          <img className="prof-pic" src='#' onClick={()=> {this.props.changeView('Profile')}} />
+          <TextField action={this.props.updateStatus} />
           chat room goes here...
         </div>
 
@@ -71,6 +47,9 @@ class MainPage extends Component {
             </Button>
             <Button text="Calendar" action={this.props.changeView} />
             <Button text="Directory" action={this.props.changeView} />
+            <button>
+              <Link to='/signup'>directory</Link>
+            </button>
           </div>
 
           {/* Feed Items */}
@@ -82,3 +61,45 @@ class MainPage extends Component {
 }
 
 export default MainPage;
+
+
+    //
+    // // DIRECTORY
+    // if (this.props.selectedPage === 'Directory') {
+    //   feed = (<Directory
+    //   listItems={this.props.directory}
+    //   viewProfile={this.props.viewProfile}
+    // />);
+    // }
+    //
+    // // SEE YOUR PROFILE PAGE
+    // else if (this.props.selectedPage === 'Profile') {
+    //   feed = (<ProfilePage
+    //     username={this.props.user.username}
+    //     hometown={this.props.user.hometown}
+    //     past={this.props.user.past}
+    //     future={this.props.user.future}
+    //     hobbies={this.props.user.hobbies}
+    //     random={this.props.user.random}
+    //     imgURL={this.props.user.imgURL}
+    //   />);
+    // }
+    //
+    // // VIEW A PROFILE PAGE
+    // else if (this.props.selectedPage === 'ViewPage') {
+    //   console.log(this.props.selectedUser);
+    //   feed = (<ProfilePage
+    //     username={this.props.selectedUser.username}
+    //     hometown={this.props.selectedUser.hometown}
+    //     past={this.props.selectedUser.past}
+    //     future={this.props.selectedUser.future}
+    //     hobbies={this.props.selectedUser.hobbies}
+    //     random={this.props.selectedUser.random}
+    //     imgURL={this.props.selectedUser.imgURL}
+    //   />);
+    // }
+    //
+    // // NEWS FEED
+    // else if (this.props.selectedPage === 'Feed') {
+    //   feed = <NewsFeed feedItems={this.props.feedItems} />;
+    // }

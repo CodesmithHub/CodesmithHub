@@ -13,16 +13,42 @@ import DirectoryItem from './directoryItem.jsx';
 
 class Directory extends Component {
 
-  render() {
-    let cohortList = [];
 
-    for (let i = 0; i < this.props.listItems.length; i++) {
+  /** Get a list of user's when directory is clicked */
+  componentDidMount() {
+    axios.get('/users')
+    .then((response) => {
+      this.props.updateDirectory(response.data);
+    })
+    .catch(() => {
+      console.log('GET ERROR');
+    });
+  }
+
+
+
+  render() {
+
+    // DIRECTORY
+
+    let listItems = this.props.directory
+    let viewProfile = this.props.viewProfile
+    console.log(this.props)
+
+
+
+    let cohortList = [];
+    // imgURL={this.props.listItems[i].imgURL}
+    // pageURL={this.props.listItems[i].pageURL}
+
+    for (let i = 0; i < listItems.length; i++) {
       cohortList.push(
         <DirectoryItem
-          username={this.props.listItems[i].username}
-          imgURL={this.props.listItems[i].imgURL}
-          pageURL={this.props.listItems[i].pageURL}
+          username={listItems[i].firstname + '  ' + listItems[i].lastname}
+          imgURL='https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png'
+          viewProfile={viewProfile}
           key={i}
+          id={listItems[i].id}
         />,
       );
     }
