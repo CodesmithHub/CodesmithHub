@@ -18,7 +18,7 @@ class SignUp extends React.Component {
         <Redirect to='/main'/>
       )
     }
-
+    
     return (
       <div>
         <table>
