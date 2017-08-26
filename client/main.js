@@ -7,6 +7,6 @@ import styles from './style.css';
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
     React.createElement(App),
-    document.getElementById('mount')
+    document.getElementById('mount'),
   );
 });

@@ -11,12 +11,10 @@ class DirectoryItem extends Component {
 
   render() {
     return (
-      <div className="directory-item">
-        <li>
+        <li className="directory-item">
           <a href='#'> <img src={this.props.imgURL} alt={this.props.username + "'s pic"} /></a>
           <span>{this.props.username}</span>
         </li>
-      </div>
     );
   }
 }
