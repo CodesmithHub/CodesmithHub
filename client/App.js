@@ -7,18 +7,18 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      directory: [testData, testData, testData, testData],
+      directory: [],
       selectedPage: 'Login',
-      feedItems: [item1, item2, item3],
-      user,
-      selectedUser: user,
+      feedItems: [],
+      user: {},
+      selectedUser: {},
     };
     this.changeView = this.changeView.bind(this);
-    this.updateStatus = this.updateStatus.bind(this);
     this.updateDirectory = this.updateDirectory.bind(this);
     this.viewProfile = this.viewProfile.bind(this);
     this.setUser = this.setUser.bind(this);
     this.setID = this.setID.bind(this);
+    this.fetchPosts = this.fetchPosts.bind(this);
   }
 
   /**
@@ -31,23 +31,15 @@ class App extends React.Component {
     this.setState({ selectedPage: buttonName });    
   }
 
-  /**
-   * Detect the enter key being pressed and appends a new feed item
-   *
-   * @param {object} newItem 
-   */
-  updateStatus(e) {
-    e.preventDefault();
-    if (e.key === 'Enter') {
-      console.log('submit data...');
-    }
-  }
-
   /** this updates the directory, the server response from a GET request is passed in */
   updateDirectory(newDirectory) {
     this.setState({ directory: newDirectory });
   }
 
+  /** when the user logs in,
+   * initally set the user to the userID
+   * immediately call setUser() after this function
+   *  */
   setID(userID) {
     console.log('setting userID');
     this.setState({ user: userID });
@@ -86,9 +78,33 @@ class App extends React.Component {
     this.setState({ selectedPage: 'ViewPage', selectedUser: selectedUser });
   }
 
-  render() {    
-    // UNCOMMENT one of the following views to start
+  /** Get the news feed from the database */
+  fetchPosts() {
+    console.log('Fetching posts...');
+    axios.post('/feedposts')
+    .then((response) => {
+      console.log(resonse);
+    })
+    .catch((err) => {
+      console.log(`ERROR: ${err}`);
+    });
+  }
 
+  /** make a post to the news feed */
+  makePost() {
+    console.log('making post...');
+
+    axios.post('/newpost', data)
+    .then(() => {
+
+    })
+    .catch((err) => {
+      console.log(`ERROR: ${err}`);
+    });
+  }
+
+  render() {    
+    console.log('rendering');
     // CONDITIONAL RENDERING
     let page;
     if (this.state.selectedPage === 'Login') {
@@ -102,18 +118,17 @@ class App extends React.Component {
     else {
       page = (<MainPage
         user={this.state.user}
-        imgURL={this.state.directory[0].imgURL}
         selectedPage={this.state.selectedPage}
         directory={this.state.directory}
         feedItems={this.state.feedItems}
         changeView={this.changeView}
-        updateStatus={this.updateStatus}
         updateDirectory={this.updateDirectory}
         viewProfile={this.viewProfile}
         selectedUser={this.state.selectedUser}
         setUser={this.setUser}
         setID={this.setID}
-        />);
+        fetchPosts={this.fetchPosts}
+      />);
     }
 
     return (

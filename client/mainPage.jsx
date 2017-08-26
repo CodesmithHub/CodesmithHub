@@ -19,6 +19,7 @@ class MainPage extends Component {
 
   /** Get a list of user's when directory is clicked */
   componentDidMount() {
+    this.props.fetchPosts();
     axios.get('/users')
     .then((response) => {
       this.props.updateDirectory(response.data);
@@ -37,7 +38,7 @@ class MainPage extends Component {
       feed = (<Directory
       listItems={this.props.directory}
       viewProfile={this.props.viewProfile}
-    />);
+      />);
     }
 
     // SEE YOUR PROFILE PAGE
@@ -71,6 +72,7 @@ class MainPage extends Component {
     // NEWS FEED
     else if (this.props.selectedPage === 'Feed') {
       console.log('FEED');
+      // this.props.fetchPosts();
       console.log(this.props.feedItems);
       feed = <NewsFeed feedItems={this.props.feedItems} />;
     }
@@ -92,7 +94,7 @@ class MainPage extends Component {
             src="https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png"
             onClick={() => { this.props.changeView('Profile'); }}
           />
-          <TextField action={this.props.updateStatus} />
+          <TextField userID={this.props.user.id} />
           chat room goes here...
         </div>
 
