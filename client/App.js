@@ -30,10 +30,13 @@ class App extends React.Component {
       directory: [testData, testData, testData, testData],
       selectedPage: 'Feed',
       feedItems: [item1, item2, item3],
-      user: user,
+      user,
+      selectedUser: user,
     };
     this.changeView = this.changeView.bind(this);
     this.updateStatus = this.updateStatus.bind(this);
+    this.updateDirectory = this.updateDirectory.bind(this);
+    this.viewProfile = this.viewProfile.bind(this);
   }
 
   /**
@@ -42,7 +45,7 @@ class App extends React.Component {
    * @param {string} buttonName
    */
   changeView(buttonName) {
-    console.log(`name: ${buttonName}`);
+    console.log(`---> ${buttonName}`);
     this.setState({ selectedPage: buttonName });    
   }
 
@@ -58,9 +61,29 @@ class App extends React.Component {
     }
   }
 
-  render() {
-    console.log('hello');
+  /** this updates the directory, the server response from a GET request is passed in */
+  updateDirectory(newDirectory) {
+    this.setState({ directory: newDirectory });
+  }
+
+  /** go to profile page */
+  viewProfile(userID) {
+    let selectedUser;
+    // find userID in directory
+    for (let i = 0; i < this.state.directory.length; i += 1) {
+      const user2 = this.state.directory[i];
+      if (user2.id === userID) {
+        selectedUser = user2;
+        console.log(selectedUser);
+      }
+    }
+    selectedUser.username = selectedUser.firstname + ' ' + selectedUser.lastname;
+    console.log(`---> ${selectedUser.username}`);
     
+    this.setState({ selectedPage: 'ViewPage', selectedUser: selectedUser });
+  }
+
+  render() {    
     // UNCOMMENT one of the following views to start
     return (
       <div>Dis be da App
@@ -72,6 +95,9 @@ class App extends React.Component {
           feedItems={this.state.feedItems}
           changeView={this.changeView}
           updateStatus={this.updateStatus}
+          updateDirectory={this.updateDirectory}
+          viewProfile={this.viewProfile}
+          selectedUser={this.state.selectedUser}
         />
         {/* <LogIn /> */}
         {/* <SignUp /> */}

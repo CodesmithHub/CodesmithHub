@@ -48,15 +48,20 @@ p {
   list-style: none;
 }
 
+.directory-item {
+  margin-bottom: 20px;
+}
+
 .directory-item img {
   width: 20%;
   padding: auto;
   margin: auto;
 }
 
-.directory-item {
-  margin-bottom: 20px;
+.directory-item span {
+  margin-left: 20px;
 }
+
 /* MAIN PAGE */
 .main-page {
 
