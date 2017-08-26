@@ -6,15 +6,15 @@ class SignUp extends React.Component {
 
   constructor() {
     super();
-    this.state = {loggedIn: false}
-    this.userInfo = this.userInfo.bind(this)
+    this.state = { loggedIn: false, user: {} };
+    this.userInfo = this.userInfo.bind(this);
   }
 
   render() {
 
     if (this.state.loggedIn) {
       return (
-        <Redirect to='/main'/>
+        <Redirect to={{pathname: "/main", state: { from: this.state.user } }} />
       )
     }
     
@@ -78,7 +78,7 @@ class SignUp extends React.Component {
 
       axios.post('/createuser', data)
       .then((response) => {
-        if (response.status === 200) this.setState({loggedIn: true});
+        if (response.status === 200) this.setState({ loggedIn: true });
         console.log(response);
       })
       .catch(function (error) {
@@ -88,11 +88,7 @@ class SignUp extends React.Component {
     axios.post('/createuser', data)
     .then((response) => {
       if (response.status === 200) {
-        console.log('should be logging in...');
-        console.log(this);
-        console.log(this.props);
-        // also need to save user as the newly created user
-        this.props.changeView('Feed');
+        this.setState({ loggedIn: true, user: response.data.id });
       }
     })
     .catch((error) => {

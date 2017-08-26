@@ -8,14 +8,15 @@ class LogIn extends React.Component {
 
   constructor() {
     super();
-    this.state = {loggedIn: false}
-    this.loginInfo = this.loginInfo.bind(this)
+    this.state = { loggedIn: false, user: {} };
+    this.loginInfo = this.loginInfo.bind(this);
+    // this.setID = this.setID.bind(this);
   }
 
   render() {
     if (this.state.loggedIn) {
       return (
-        <Redirect to='/main'/>
+        <Redirect to={{pathname: "/main", state: { from: this.state.user } }} />
       )
     }
     
@@ -27,18 +28,19 @@ class LogIn extends React.Component {
               <th className="header">CodesmithHub</th>
             </tr>
             <tr>
-              <td className='tableContent'>
-                <div className='input'>
+              <td className="tableContent">
+                <div className="input">
                   <form onSubmit={this.loginInfo}>
-                    <b>Email:</b> <input type='text' id='loginEmail' placeholder='email'/>
+                    <b>Email:</b> <input type="text" id="loginEmail" placeholder="email"/>
                     <br/><br/>
-                    <b>Password:</b> <input type='password' id='loginPassword' placeholder='password'/>
+                    <b>Password:</b> <input type="password" id="loginPassword" placeholder="password"/>
                     <br/><br/>
-                    <button type='submit'>LogIn</button>
+                    <button type="submit">LogIn</button>
                     <button>
-                      <Link to='/signup'>Signup</Link>
+                      <Link to="/signup">Signup</Link>
                     </button>
                   </form>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -47,20 +49,26 @@ class LogIn extends React.Component {
     )
   }
 
+  // setID(userID) {
+  //   console.log('setting userID: ', userID);
+  //   this.setState({ user: userID });
+  // }
+
+
   loginInfo(e) {
     e.preventDefault();
 
     const data = {
       email: document.getElementById('loginEmail').value,
-      password: document.getElementById('loginPassword').value
+      password: document.getElementById('loginPassword').value,
     }
 
     axios.post('/login', data)
     .then((response) => {
       console.log(this);
       if (response.status === 200) {
-        this.setState({loggedIn: true})
-        this.props.setID(response.data.id);
+        this.setState({ loggedIn: true, user: response.data.id });
+        // this.setID(response.data.id);
       }
     })
     .catch((error) => {
