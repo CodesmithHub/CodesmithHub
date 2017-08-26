@@ -1,7 +1,11 @@
 import React from 'react';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import MainPage from './mainPage.jsx';
 import LogIn from './login.js';
 import SignUp from './signup.js';
+import Directory from './directory.jsx';
+import ProfilePage from './profile.jsx';
+import NewsFeed from './newsFeed.jsx';
 
 class App extends React.Component {
   constructor() {
@@ -76,36 +80,16 @@ class App extends React.Component {
     this.setState({ selectedPage: 'ViewPage', selectedUser: selectedUser });
   }
 
-  /** RENDER THE MAIN APP -> LogIn, SignUp, or MAIN */
-  render() {    
-    // CONDITIONAL RENDERING for 'page'
-    let view;
-    if (this.state.selectedPage === 'Login') {
-      view = <LogIn changeView={this.changeView} setID={this.setID} />;
-    }
-
-    else if (this.state.selectedPage === 'SignUp') {
-      view = <SignUp changeView={this.changeView} setID={this.setID} />;
-    }
-
-    else {
-      view = (<MainPage
-        user={this.state.user}
-        selectedPage={this.state.selectedPage}
-        directory={this.state.directory}
-        changeView={this.changeView}
-        updateDirectory={this.updateDirectory}
-        viewProfile={this.viewProfile}
-        selectedUser={this.state.selectedUser}
-        setUser={this.setUser}
-        setID={this.setID}
-      />);
-    }
-
+  render() {
     return (
-      <div>
-        Dis be da App
-        {view}
+      <div>Dis be da App
+        <BrowserRouter>
+          <div>
+            <Route exact path='/' component={LogIn}/>
+            <Route exact path='/signup' component={SignUp}/>
+            <Route path='/main' component={MainPage}/>
+          </div>
+        </BrowserRouter>
       </div>
     );
   }

@@ -1,30 +1,24 @@
 import React, { Component } from 'react';
+import { render } from 'react-dom';
+import SignUp from './signup.js';
+import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
+import MainPage from './mainPage.jsx';
 
 class LogIn extends React.Component {
 
-  /** POST this data to the database, and log in user if password correct */
-  loginInfo() {
-    const data = {
-      email: document.getElementById('loginEmail').value,
-      password: document.getElementById('loginPassword').value,
-    };
-
-    axios.post('/login', data)
-    .then((response) => {
-      if (response.status === 200) {
-        console.log('should be logging in...');
-        this.props.setID(response.data.id); // set the logged in user
-        this.props.changeView('Feed');
-      }
-    })
-    .catch((error) => {
-      console.log(`ERROR: ${error}`);
-    });
+  constructor() {
+    super();
+    this.state = {loggedIn: false}
+    this.loginInfo = this.loginInfo.bind(this)
   }
 
   render() {
-    this.loginInfo = this.loginInfo.bind(this);
-
+    if (this.state.loggedIn) {
+      return (
+        <Redirect to='/main'/>
+      )
+    }
+    
     return (
       <div className="login-page">
         <table>
@@ -33,24 +27,45 @@ class LogIn extends React.Component {
               <th className="header">CodesmithHub</th>
             </tr>
             <tr>
-              <td className="tableContent">
-                <div className="input">
-                  <form>
-                    <b>Email:</b> <input type="text" id="loginEmail" />
+              <td className='tableContent'>
+                <div className='input'>
+                  <form onSubmit={this.loginInfo}>
+                    <b>Email:</b> <input type='text' id='loginEmail' placeholder='email'/>
                     <br/><br/>
-                    <b>Password:</b> <input type="password" id="loginPassword" />
+                    <b>Password:</b> <input type='password' id='loginPassword' placeholder='password'/>
+                    <br/><br/>
+                    <button type='submit'>LogIn</button>
+                    <button>
+                      <Link to='/signup'>Signup</Link>
+                    </button>
                   </form>
-                </div>
-                <br/>
-                <br/>
-                <button className="btn btn-lg button" type="submit" onClick={this.loginInfo}>LogIn</button>
-                <button className="btn btn-lg button" type="Login" onClick={() => { this.props.changeView('SignUp'); }} >SignUp?</button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-    );
+    )
+  }
+
+  loginInfo(e) {
+    e.preventDefault();
+
+    const data = {
+      email: document.getElementById('loginEmail').value,
+      password: document.getElementById('loginPassword').value
+    }
+
+    axios.post('/login', data)
+    .then((response) => {
+      console.log(this);
+      if (response.status === 200) {
+        this.setState({loggedIn: true})
+        this.props.setID(response.data.id);
+      }
+    })
+    .catch((error) => {
+      console.log(`ERROR: ${error}`);
+    });
   }
 }
 

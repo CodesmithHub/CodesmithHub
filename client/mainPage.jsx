@@ -4,6 +4,9 @@ import ProfilePage from './profile.jsx';
 import Button from './button.jsx';
 import TextField from './textField.jsx';
 import NewsFeed from './newsFeed.jsx';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
+
+
 
 /**
  * Main will render the main page when a user logs in
@@ -83,7 +86,6 @@ class MainPage extends Component {
     return (
       <div className="main-page">
         <h1> MAIN </h1>
-
         <div className="list-group col-sm-2">
           <img
             className="prof-pic"
@@ -98,9 +100,14 @@ class MainPage extends Component {
         <div className="col-sm-10 col-sm-offset-2">
           {/* nav bar */}
           <div className="nav-bar">
-            <Button text="Feed" action={this.props.changeView} />
+            <Button text="Feed" action={this.props.changeView}>
+            <Link to='/newsfeed'>Feed</Link>
+            </Button>
             <Button text="Calendar" action={this.props.changeView} />
             <Button text="Directory" action={this.props.changeView} />
+            <button>
+              <Link to='/signup'>directory</Link>
+            </button>
           </div>
 
           {/* Feed Items */}
