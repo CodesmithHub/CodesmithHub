@@ -19,7 +19,6 @@ class MainPage extends Component {
 
   /** Get a list of user's when directory is clicked */
   componentDidMount() {
-    this.props.fetchPosts();
     axios.get('/users')
     .then((response) => {
       this.props.updateDirectory(response.data);
@@ -30,6 +29,7 @@ class MainPage extends Component {
     });
   }
 
+  /** Render the main page based on 'selectedPage' */
   render() {
     let feed;
 
@@ -73,9 +73,6 @@ class MainPage extends Component {
 
     // NEWS FEED
     else if (this.props.selectedPage === 'Feed') {
-      console.log('FEED');
-      // this.props.fetchPosts();
-      console.log(this.props.feedItems);
       feed = <NewsFeed feedItems={this.props.feedItems} />;
     }
 
@@ -87,8 +84,6 @@ class MainPage extends Component {
       <div className="main-page">
         <h1> MAIN </h1>
 
-        {/* src={this.props.user.imgURL} */}
-        {/* profile pic / chat */}
         <div className="list-group col-sm-2">
           <img
             className="prof-pic"
@@ -110,6 +105,7 @@ class MainPage extends Component {
 
           {/* Feed Items */}
           {feed}
+
         </div>
       </div>
     );

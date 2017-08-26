@@ -9,7 +9,6 @@ class App extends React.Component {
     this.state = {
       directory: [],
       selectedPage: 'Login',
-      feedItems: [],
       user: {},
       selectedUser: {},
     };
@@ -18,7 +17,6 @@ class App extends React.Component {
     this.viewProfile = this.viewProfile.bind(this);
     this.setUser = this.setUser.bind(this);
     this.setID = this.setID.bind(this);
-    this.fetchPosts = this.fetchPosts.bind(this);
   }
 
   /**
@@ -28,7 +26,7 @@ class App extends React.Component {
    */
   changeView(buttonName) {
     console.log(`---> ${buttonName}`);
-    this.setState({ selectedPage: buttonName });    
+    this.setState({ selectedPage: buttonName });
   }
 
   /** this updates the directory, the server response from a GET request is passed in */
@@ -57,7 +55,7 @@ class App extends React.Component {
       }
     }
     userToSet.username = userToSet.firstname + ' ' + userToSet.lastname;
-    
+
     this.setState({ user: userToSet });
   }
 
@@ -74,70 +72,43 @@ class App extends React.Component {
     }
     selectedUser.username = selectedUser.firstname + ' ' + selectedUser.lastname;
     console.log(`---> ${selectedUser.username}`);
-    
+
     this.setState({ selectedPage: 'ViewPage', selectedUser: selectedUser });
   }
 
-  /** Get the news feed from the database */
-  fetchPosts() {
-    console.log('Fetching posts...');
-    axios.post('/feedposts')
-    .then((response) => {
-      console.log(resonse);
-    })
-    .catch((err) => {
-      console.log(`ERROR: ${err}`);
-    });
-  }
-
-  /** make a post to the news feed */
-  makePost() {
-    console.log('making post...');
-
-    axios.post('/newpost', data)
-    .then(() => {
-
-    })
-    .catch((err) => {
-      console.log(`ERROR: ${err}`);
-    });
-  }
-
+  /** RENDER THE MAIN APP -> LogIn, SignUp, or MAIN */
   render() {    
-    console.log('rendering');
-    // CONDITIONAL RENDERING
-    let page;
+    // CONDITIONAL RENDERING for 'page'
+    let view;
     if (this.state.selectedPage === 'Login') {
-      page = <LogIn changeView={this.changeView} setID={this.setID} />;
+      view = <LogIn changeView={this.changeView} setID={this.setID} />;
     }
 
     else if (this.state.selectedPage === 'SignUp') {
-      page = <SignUp changeView={this.changeView} setID={this.setID} />;
+      view = <SignUp changeView={this.changeView} setID={this.setID} />;
     }
 
     else {
-      page = (<MainPage
+      view = (<MainPage
         user={this.state.user}
         selectedPage={this.state.selectedPage}
         directory={this.state.directory}
-        feedItems={this.state.feedItems}
         changeView={this.changeView}
         updateDirectory={this.updateDirectory}
         viewProfile={this.viewProfile}
         selectedUser={this.state.selectedUser}
         setUser={this.setUser}
         setID={this.setID}
-        fetchPosts={this.fetchPosts}
       />);
     }
 
     return (
       <div>
         Dis be da App
-        {page}
+        {view}
       </div>
     );
   }
 }
 
-export default App
+export default App;
