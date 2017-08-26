@@ -11,7 +11,7 @@ const userController = {};
 pg.connect((err, client, done) => {
     if (err) console.log(err);
     console.log('connected to db');
-  });
+});
 
 
 //create user in Postgres
@@ -44,10 +44,11 @@ userController.verifyUser = (request, response) => {
     const hash = bcrypt.hashSync(request.body.password, salt);
     pg.query("SELECT * FROM users WHERE email = '" + email + "';")
         .then(res => {
-            if(!res.rows.length) response.status(400).json('User not found!');
+            if (!res.rows.length) response.status(400).json('User not found!');
             else {
-                if(res.rows[0].password === hash) response.status(200).json('OK');
-                else return response.status(400).json('INCORRECT PASSWORD');
+                if (bcrypt.compareSync(request.body.password, res.rows[0].password)) {
+                    response.status(200).json({id: res.rows[0].user_id});
+                } else return response.status(400).json('INCORRECT PASSWORD');
             }
         })
         .catch(err => response.status(400).json('Something went wrong: ', err));
@@ -73,7 +74,30 @@ userController.grabUsers = (request, response) => {
             }, []);
             response.status(200).json(users);
         })
-        .catch(err => {console.log(err); response.status(400).json('Something went wrong: ', err)});
+        .catch(err => { console.log(err); response.status(400).json('Something went wrong: ', err) });
+}
+
+// return list of user posts
+userController.grabPosts = (request, response) => {
+    let id = request.body.user_id;
+    pg.query({
+        name: 'grab-posts',
+        text: "SELECT userposts.post FROM userposts WHERE userposts.user = $1;",
+        values: [id]
+    })
+        .then(res => { console.log(res.rows); response.status(200).json(res.rows) })
+        .catch(err => { console.log('err: ', err); response.status(400).json('Error: ', err) })
+}
+
+// create new post in DB
+userController.addPost = (request, response) => {
+    pg.query({
+        name: 'create-post',
+        text: 'INSERT INTO userposts ("user", "post") VALUES ($1, $2);',
+        values: [request.body.user_id, request.body.post]
+    })
+        .then(res => response.status(200).json('Post created!'))
+        .catch(err => response.status(400).json('An error occurred: ' + err));
 }
 
 
