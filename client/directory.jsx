@@ -19,7 +19,7 @@ class Directory extends Component {
 
   /** Get a list of user's when directory is clicked */
   componentDidMount() {
-    axios.get('/users')
+    axios.get('/user/all')
     .then((response) => {
       this.props.updateDirectory(response.data);
     })

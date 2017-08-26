@@ -10,7 +10,6 @@ class LogIn extends React.Component {
     super();
     this.state = { loggedIn: false, user: {} };
     this.loginInfo = this.loginInfo.bind(this);
-    // this.setID = this.setID.bind(this);
   }
 
   render() {
@@ -49,12 +48,6 @@ class LogIn extends React.Component {
     )
   }
 
-  // setID(userID) {
-  //   console.log('setting userID: ', userID);
-  //   this.setState({ user: userID });
-  // }
-
-
   loginInfo(e) {
     e.preventDefault();
 
@@ -63,12 +56,11 @@ class LogIn extends React.Component {
       password: document.getElementById('loginPassword').value,
     }
 
-    axios.post('/login', data)
+    axios.post('/authenticate/validate', data)
     .then((response) => {
       console.log(this);
       if (response.status === 200) {
         this.setState({ loggedIn: true, user: response.data.id });
-        // this.setID(response.data.id);
       }
     })
     .catch((error) => {

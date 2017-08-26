@@ -97,7 +97,7 @@ class MainPage extends Component {
   componentDidMount() {
     this.setState({ selectedPage: 'Feed', user: this.props.location.state.from });
 
-    axios.get('/users')
+    axios.get('/user/all')
     .then((response) => {
       this.updateDirectory(response.data);
       this.setUser(this.state.user);

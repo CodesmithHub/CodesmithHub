@@ -40,7 +40,7 @@ class TextField extends Component {
 
       console.log(`Posting the following: ${data.user_id}  ${data.post}`);
 
-      axios.post('/newpost', data)
+      axios.post('/user/addpost', data)
       .then((response) => {
         if (response.status === 200) {
           console.log('success!');
