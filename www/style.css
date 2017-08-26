@@ -4,7 +4,7 @@ body {
 
 /* PROFILE PAGE */
 .profile-page {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 600px;
   margin: auto;
 }
@@ -29,7 +29,7 @@ body {
   width: 400px;
   text-align: center;
   display: block;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .question {
@@ -47,10 +47,19 @@ p {
 /* DIRECTORY-ITEM */
 .cohort-list {
   list-style: none;
+  border: 1px solid black;
+  margin: 0;
+  padding: 0;
 }
 
 .directory-item {
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+.directory-item:hover {
+  border: 1px solid blue;
 }
 
 .directory-item img {
@@ -61,6 +70,10 @@ p {
 
 .directory-item span {
   margin-left: 20px;
+}
+
+.feed-item {
+
 }
 
 /* MAIN PAGE */
@@ -85,13 +98,54 @@ p {
   border: 1px solid black;
 }
 
+/*  NAV BUTTONS  */
+.button {
+  color: #FFFFFF;
+  background-color: #36A0E3;
+  border: 1px solid #36A0E3;
+  margin-left: 15px;
+  margin-right: 15px;  
+}
+
+.button:hover {
+  color: #000000;
+  background-color: #36A0E3;
+  border: 1px solid #36A0E3;  
+  /* border-color: #178736; */
+  cursor: pointer;
+}
+
+/* Selected Button - not implimented */
+/* .button-active {
+  color: #FFFFFF;
+  background-color: BLACK;
+  border-color: #55A96C;
+  margin-left: 15px;
+  margin-right: 15px;  
+}
+
+.button-active:hover {
+  color: #fff;
+  background-color: #178736;
+  border-color: #178736;
+} */
+/*  END BUTTONS  */
+
 .news-feed {
   list-style: none;
   border: 1px solid black;
+  margin: 0;
+  padding: 0;
 }
 
 .feed-item {
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+.feed-item:hover {
+  border: 1px solid blue;
 }
 
 .feed-item span {
@@ -104,6 +158,7 @@ p {
   margin: auto;
 }
 
+
 .text-field input {
   width: 100%;
   padding: 12px 20px;
@@ -115,13 +170,13 @@ p {
 }
 
 .col-sm-2 {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   margin: auto;
   height: 100%;
 }
 
 .col-sm-offset-2 {
-  border: 2px solid green;
+  /* border: 2px solid green; */
   margin: auto;
   height: 100%;
 }
@@ -142,4 +197,33 @@ background-color: blue;
 
 .tablecontent {
   background: GhostWhite;
+}
+
+.login-page input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.login-page {
+  align-content: center;
+}
+
+.login-page button {
+  color: #FFFFFF;
+  background-color: #36A0E3;
+  border: 1px solid #36A0E3;
+  margin-left: 15px;
+  margin-right: 15px;  
+}
+
+.login-page button:hover {
+  color: #000000;
+  background-color: #36A0E3;
+  border: 1px solid #36A0E3;  
+  cursor: pointer;
 }

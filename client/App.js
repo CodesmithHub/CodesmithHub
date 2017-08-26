@@ -13,7 +13,6 @@ class App extends React.Component {
     this.state = {
       directory: [],
       selectedPage: 'Login',
-      feedItems: [],
       user: {},
       selectedUser: {},
     };
@@ -22,7 +21,6 @@ class App extends React.Component {
     this.viewProfile = this.viewProfile.bind(this);
     this.setUser = this.setUser.bind(this);
     this.setID = this.setID.bind(this);
-    this.fetchPosts = this.fetchPosts.bind(this);
   }
 
   /**
@@ -61,7 +59,7 @@ class App extends React.Component {
       }
     }
     userToSet.username = userToSet.firstname + ' ' + userToSet.lastname;
-    
+
     this.setState({ user: userToSet });
   }
 
@@ -92,13 +90,9 @@ class App extends React.Component {
             <Route path='/main' component={MainPage}/>
           </div>
         </BrowserRouter>
-    return (
-      <div>
-        Dis be da App
-        {page}
       </div>
     );
   }
 }
 
-export default App
+export default App;

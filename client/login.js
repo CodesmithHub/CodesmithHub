@@ -18,13 +18,13 @@ class LogIn extends React.Component {
         <Redirect to='/main'/>
       )
     }
-
+    
     return (
-      <div>
+      <div className="login-page">
         <table>
-            <tbody>
+          <tbody>
             <tr>
-            <th className='header'>CodesmithHub</th>
+              <th className="header">CodesmithHub</th>
             </tr>
             <tr>
               <td className='tableContent'>
@@ -39,7 +39,6 @@ class LogIn extends React.Component {
                       <Link to='/signup'>Signup</Link>
                     </button>
                   </form>
-                  </div>
               </td>
             </tr>
           </tbody>

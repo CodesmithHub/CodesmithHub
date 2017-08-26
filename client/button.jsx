@@ -5,7 +5,7 @@ class Button extends Component {
   render() {
     return (
       <div
-        className="btn btn-lg button-active" 
+        className="btn btn-lg button"
         onClick={() => {this.props.action(this.props.text)}} >
         {this.props.text}
       </div>

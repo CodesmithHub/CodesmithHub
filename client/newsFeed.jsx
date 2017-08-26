@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
-import FeedItems from './feedItem.jsx';
+import FeedItem from './feedItem.jsx';
 
 class NewsFeed extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      feedItems: [],
+    };
+    this.fetchPosts = this.fetchPosts.bind(this);
+  }
+
   render() {
-    let feedItems = [];
-    for (let i = 0; i < this.props.feedItems.length; i += 1) {
-      feedItems.push(
-        <FeedItems
-          username={this.props.feedItems[i].username} 
-          message={this.props.feedItems[i].message}
-          imgURL={this.props.feedItems[i].imgURL}
+    const feed = [];
+    const imgURL = 'https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png';
+
+    for (let i = 0; i < this.state.feedItems.length; i += 1) {
+      feed.push(
+        <FeedItem
+          username={this.state.feedItems[i].id} 
+          message={this.state.feedItems[i].post}
+          imgURL={imgURL}
           key={i}
         />);
     }
@@ -19,10 +29,27 @@ class NewsFeed extends Component {
       <div className="directory">
         <h1>NEWS FEED</h1>
         <ul className="news-feed">
-          {feedItems}
+          {feed}
         </ul>
       </div>
     );
+  }
+
+  componentDidMount() {
+    this.fetchPosts();
+  }
+
+  /** Get the news feed from the database */
+  fetchPosts() {
+    console.log('Fetching posts...');
+    axios.get('/allposts')
+    .then((res) => {
+      console.log(res.data);
+      this.setState({ feedItems: res.data });
+    })
+    .catch((err) => {
+      console.log(`ERROR: ${err}`);
+    });
   }
 }
 
