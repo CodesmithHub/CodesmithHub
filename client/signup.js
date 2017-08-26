@@ -76,24 +76,15 @@ class SignUp extends React.Component {
         random: document.getElementById('random').value
       }
 
-      axios.post('/createuser', data)
+      axios.post('/authenticate/create', data)
       .then((response) => {
-        if (response.status === 200) this.setState({ loggedIn: true });
-        console.log(response);
+        if (response.status === 200) {
+          this.setState({ loggedIn: true, user: response.data.id });
+        }
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
+        console.log(`ERROR: ${error}`);
       });
-
-    axios.post('/createuser', data)
-    .then((response) => {
-      if (response.status === 200) {
-        this.setState({ loggedIn: true, user: response.data.id });
-      }
-    })
-    .catch((error) => {
-      console.log(`ERROR: ${error}`);
-    });
   }
 }
 

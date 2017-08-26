@@ -69,7 +69,7 @@ class ProfilePage extends Component {
   getFeedItems() {
     console.log(`requesting posts from: ${this.props.id}  ${this.props.username}`);
 
-    axios.post('/feedposts', { user_id: this.props.id })
+    axios.post('/user/posts', { user_id: this.props.id })
     .then((res) => {
       console.log('** recieved posts **');
       console.log(res.data);

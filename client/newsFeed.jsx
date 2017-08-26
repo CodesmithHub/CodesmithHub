@@ -42,7 +42,7 @@ class NewsFeed extends Component {
   /** Get the news feed from the database */
   fetchPosts() {
     console.log('Fetching posts...');
-    axios.get('/allposts')
+    axios.get('/user/allposts')
     .then((res) => {
       console.log(res.data);
       this.setState({ feedItems: res.data });
