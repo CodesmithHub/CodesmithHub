@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Directory from './directory.jsx';
 import ProfilePage from './profile.jsx';
 import Button from './button.jsx';
+import TextField from './textField.jsx';
+import NewsFeed from './newsFeed.jsx';
 
 /**
  * Main will render the main page when a user logs in
@@ -16,25 +18,33 @@ import Button from './button.jsx';
 class MainPage extends Component {
 
   render() {
-
+    console.log('hello');
     let feed;
+
+    // DIRECTORY
     if (this.props.selectedPage === 'Directory') {
       feed = <Directory listItems={this.props.directory} />;
     }
 
+    // PROFILE PAGE
     else if (this.props.selectedPage === 'Profile') {
-      let user = this.props.directory[0];
+      console.log('--> directory');
       feed = (<ProfilePage
-        username={user.username}
-        hometown={user.hometown}
-        past={user.past}
-        future={user.future}
-        hobbies={user.hobbies}
-        random={user.random}
-        imgURL={user.imgURL}
+        username={this.props.user.username}
+        hometown={this.props.user.hometown}
+        past={this.props.user.past}
+        future={this.props.user.future}
+        hobbies={this.props.user.hobbies}
+        random={this.props.user.random}
+        imgURL={this.props.user.imgURL}
       />);
     }
 
+    // NEWS FEED
+    else if (this.props.selectedPage === 'Feed') {
+      console.log('--> feed');
+      feed = <NewsFeed feedItems={this.props.feedItems} />;
+    }
 
     return (
       <div className="main-page">
@@ -43,6 +53,7 @@ class MainPage extends Component {
         {/* profile pic / chat */}
         <div className="list-group col-sm-2">
           <img src={this.props.imgURL} onClick={()=> {this.props.changeView('Profile')}} />
+          <TextField />
           chat room goes here...
         </div>
 
@@ -57,7 +68,6 @@ class MainPage extends Component {
 
           {/* Feed Items */}
           {feed}
-
         </div>
       </div>
     );
