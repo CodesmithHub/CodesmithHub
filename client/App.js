@@ -1,7 +1,11 @@
 import React from 'react';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import MainPage from './mainPage.jsx';
 import LogIn from './login.js';
 import SignUp from './signup.js';
+import Directory from './directory.jsx';
+import ProfilePage from './profile.jsx';
+import NewsFeed from './newsFeed.jsx';
 
 class App extends React.Component {
   constructor() {
@@ -28,7 +32,7 @@ class App extends React.Component {
    */
   changeView(buttonName) {
     console.log(`---> ${buttonName}`);
-    this.setState({ selectedPage: buttonName });    
+    this.setState({ selectedPage: buttonName });
   }
 
   /** this updates the directory, the server response from a GET request is passed in */
@@ -74,63 +78,20 @@ class App extends React.Component {
     }
     selectedUser.username = selectedUser.firstname + ' ' + selectedUser.lastname;
     console.log(`---> ${selectedUser.username}`);
-    
+
     this.setState({ selectedPage: 'ViewPage', selectedUser: selectedUser });
   }
 
-  /** Get the news feed from the database */
-  fetchPosts() {
-    console.log('Fetching posts...');
-    axios.post('/feedposts')
-    .then((response) => {
-      console.log(resonse);
-    })
-    .catch((err) => {
-      console.log(`ERROR: ${err}`);
-    });
-  }
-
-  /** make a post to the news feed */
-  makePost() {
-    console.log('making post...');
-
-    axios.post('/newpost', data)
-    .then(() => {
-
-    })
-    .catch((err) => {
-      console.log(`ERROR: ${err}`);
-    });
-  }
-
-  render() {    
-    console.log('rendering');
-    // CONDITIONAL RENDERING
-    let page;
-    if (this.state.selectedPage === 'Login') {
-      page = <LogIn changeView={this.changeView} setID={this.setID} />;
-    }
-
-    else if (this.state.selectedPage === 'SignUp') {
-      page = <SignUp changeView={this.changeView} setID={this.setID} />;
-    }
-
-    else {
-      page = (<MainPage
-        user={this.state.user}
-        selectedPage={this.state.selectedPage}
-        directory={this.state.directory}
-        feedItems={this.state.feedItems}
-        changeView={this.changeView}
-        updateDirectory={this.updateDirectory}
-        viewProfile={this.viewProfile}
-        selectedUser={this.state.selectedUser}
-        setUser={this.setUser}
-        setID={this.setID}
-        fetchPosts={this.fetchPosts}
-      />);
-    }
-
+  render() {
+    return (
+      <div>Dis be da App
+        <BrowserRouter>
+          <div>
+            <Route exact path='/' component={LogIn}/>
+            <Route exact path='/signup' component={SignUp}/>
+            <Route path='/main' component={MainPage}/>
+          </div>
+        </BrowserRouter>
     return (
       <div>
         Dis be da App

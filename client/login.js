@@ -1,63 +1,73 @@
 import React, { Component } from 'react';
+import { render } from 'react-dom';
+import SignUp from './signup.js';
+import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
+import MainPage from './mainPage.jsx';
 
 class LogIn extends React.Component {
 
-  render() {
+  constructor() {
+    super();
+    this.state = {loggedIn: false}
+    this.loginInfo = this.loginInfo.bind(this)
+  }
 
-    console.log(this.props);
-    this.loginInfo = this.loginInfo.bind(this);
+  render() {
+    if (this.state.loggedIn) {
+      return (
+        <Redirect to='/main'/>
+      )
+    }
 
     return (
       <div>
         <table>
             <tbody>
             <tr>
-            <th className="header">CodesmithHub</th>
+            <th className='header'>CodesmithHub</th>
             </tr>
             <tr>
-              <td className="tableContent">
-                <div className="input">
-                  <form>
-                    <b>Email:</b> <input type="text" id="loginEmail" />
+              <td className='tableContent'>
+                <div className='input'>
+                  <form onSubmit={this.loginInfo}>
+                    <b>Email:</b> <input type='text' id='loginEmail' placeholder='email'/>
                     <br/><br/>
-                    <b>Password:</b> <input type="password" id="loginPassword" />
+                    <b>Password:</b> <input type='password' id='loginPassword' placeholder='password'/>
+                    <br/><br/>
+                    <button type='submit'>LogIn</button>
+                    <button>
+                      <Link to='/signup'>Signup</Link>
+                    </button>
                   </form>
-                </div>
-                <br/>
-                <br/>
-                <button type="submit" onClick={this.loginInfo}>LogIn</button>
-                <button type="Login" onClick={() => { this.props.changeView('SignUp'); }} >SignUp?</button>
+                  </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-    );
+    )
   }
 
-  loginInfo() {
+  loginInfo(e) {
+    e.preventDefault();
+
     const data = {
       email: document.getElementById('loginEmail').value,
-      password: document.getElementById('loginPassword').value,
-    };
+      password: document.getElementById('loginPassword').value
+    }
 
     axios.post('/login', data)
     .then((response) => {
+      console.log(this);
       if (response.status === 200) {
-        console.log('should be logging in...');
+        this.setState({loggedIn: true})
         this.props.setID(response.data.id);
-        // need to set user to logged in user
-        this.props.changeView('Feed');
       }
     })
     .catch((error) => {
       console.log(`ERROR: ${error}`);
     });
   }
-
-  changeView() {}
-
-  setID() {}
 }
 
 export default LogIn;
