@@ -4,20 +4,17 @@ const webpack = require('webpack');
 const webpackConfig = require('./../webpack.config.js');
 const app = express();
 const { Client } = require('pg');
+// use connectionString to to connect to DB via CLI => psql connectionString
 const connectionString = 'postgres://taviagze:xhNoQjlMqnEg86XbeWnAyTN-TEl_Dqyc@stampy.db.elephantsql.com:5432/taviagze';
 const pg = new Client({ connectionString: connectionString });
-const userController = require('./userController.js');
+const userController = require('./controllers/userController.js');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const sessionController = require('./sessionController.js');
-
+const sessionController = require('./controllers/sessionController.js');
+const userRouter = require('./routers/userRouter.js');
+const authenticationRouter = require('./routers/authenticationRouter.js');
 const compiler = webpack(webpackConfig);
- 
-app.use(express.static(__dirname + './../www'));
-app.use(bodyParser.json(),
-  cookieParser(),
-  sessionController.verifyJWT);
- 
+
 app.use(webpackDevMiddleware(compiler, {
   hot: true,
   filename: 'bundle.js',
@@ -28,31 +25,25 @@ app.use(webpackDevMiddleware(compiler, {
   historyApiFallback: true,
 }));
 
-// create new user
-app.post('/createuser', userController.createUser, sessionController.setJWT,
+// run request through parsers and verify session
+app.use(bodyParser.json(), 
+  cookieParser(),
+  sessionController.verifyJWT);
+
+// all requests to /users get routed to middleware to hit additional sub routes
+app.use('/user', userRouter.router, 
   (request, response) => response.status(200).json(request.body.return));
 
-// verify login credentials
-app.post('/login', userController.verifyUser, sessionController.setJWT,
+// all requests to /authenticate get routed to middleware to hit additional sub routes
+app.use('/authenticate', authenticationRouter.router,
   (request, response) => response.status(200).json(request.body.return));
 
-// get all user data
-app.get('/users', userController.grabUsers);
+// send bundle on all requests
+app.get('/*', express.static(__dirname + './../www'))
 
-// get all activity posts for given user
-app.post('/feedposts', userController.grabPosts);
-
-// create new activity post for given user
-app.post('/newpost', userController.addPost);
-
-app.get('/allposts', userController.allPosts,
-  (request, response) => response.status(200).json(request.body.return));
-
-
-
- 
+// start server
 const server = app.listen(3000, function() {
   const host = server.address().address;
   const port = server.address().port;
-  console.log('Example app listening at http://%s:%s', host, port);
+  console.log('Codesmith Hub listening at http://%s:%s', host, port);
 });
