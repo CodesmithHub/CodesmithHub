@@ -11,7 +11,7 @@ class TextField extends Component {
     return (
       <div className="text-field">
         {/* <form action={() => { console.log('field submitted!'); return false; }}> */}
-          <input type="text" placeholder="Status.." />
+          <input type="text" placeholder="Status.." onKeyUp={(event) => { this.props.action(event) }} />
         {/* </form> */}
       </div>
     );

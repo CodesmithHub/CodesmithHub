@@ -8,11 +8,14 @@ import React, { Component } from 'react';
 class DirectoryItem extends Component {
 
   // TODO change href to this.props.pageURL
-
   render() {
+
     return (
         <li className="directory-item">
-          <a href='#'> <img src={this.props.imgURL} alt={this.props.username + "'s pic"} /></a>
+          <a href='#'> 
+            <img src={this.props.imgURL} alt={this.props.username + "'s pic"}
+            onClick={() => { this.props.viewProfile(this.props.id); }} />
+          </a>
           <span>{this.props.username}</span>
         </li>
     );

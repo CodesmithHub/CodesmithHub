@@ -17,18 +17,30 @@ import NewsFeed from './newsFeed.jsx';
 
 class MainPage extends Component {
 
+  /** Get a list of user's when directory is clicked */
+  componentDidMount() {
+    axios.get('/users')
+    .then((response) => {
+      this.props.updateDirectory(response.data);
+    })
+    .catch(() => {
+      console.log('GET ERROR');
+    });
+  }
+
   render() {
-    console.log('hello');
     let feed;
 
     // DIRECTORY
     if (this.props.selectedPage === 'Directory') {
-      feed = <Directory listItems={this.props.directory} />;
+      feed = (<Directory
+      listItems={this.props.directory}
+      viewProfile={this.props.viewProfile}
+    />);
     }
 
-    // PROFILE PAGE
+    // SEE YOUR PROFILE PAGE
     else if (this.props.selectedPage === 'Profile') {
-      console.log('--> directory');
       feed = (<ProfilePage
         username={this.props.user.username}
         hometown={this.props.user.hometown}
@@ -40,9 +52,22 @@ class MainPage extends Component {
       />);
     }
 
+    // VIEW A PROFILE PAGE
+    else if (this.props.selectedPage === 'ViewPage') {
+      console.log(this.props.selectedUser);
+      feed = (<ProfilePage
+        username={this.props.selectedUser.username}
+        hometown={this.props.selectedUser.hometown}
+        past={this.props.selectedUser.past}
+        future={this.props.selectedUser.future}
+        hobbies={this.props.selectedUser.hobbies}
+        random={this.props.selectedUser.random}
+        imgURL={this.props.selectedUser.imgURL}
+      />);
+    }
+
     // NEWS FEED
     else if (this.props.selectedPage === 'Feed') {
-      console.log('--> feed');
       feed = <NewsFeed feedItems={this.props.feedItems} />;
     }
 
@@ -52,8 +77,8 @@ class MainPage extends Component {
 
         {/* profile pic / chat */}
         <div className="list-group col-sm-2">
-          <img src={this.props.imgURL} onClick={()=> {this.props.changeView('Profile')}} />
-          <TextField />
+          <img className="prof-pic" src={this.props.user.imgURL} onClick={()=> {this.props.changeView('Profile')}} />
+          <TextField action={this.props.updateStatus} />
           chat room goes here...
         </div>
 

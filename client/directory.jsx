@@ -15,14 +15,17 @@ class Directory extends Component {
 
   render() {
     let cohortList = [];
+    // imgURL={this.props.listItems[i].imgURL}
+    // pageURL={this.props.listItems[i].pageURL}
 
     for (let i = 0; i < this.props.listItems.length; i++) {
       cohortList.push(
         <DirectoryItem
-          username={this.props.listItems[i].username}
-          imgURL={this.props.listItems[i].imgURL}
-          pageURL={this.props.listItems[i].pageURL}
+          username={this.props.listItems[i].firstname + '  ' + this.props.listItems[i].lastname}
+          imgURL='https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png'
+          viewProfile={this.props.viewProfile}
           key={i}
+          id={this.props.listItems[i].id}
         />,
       );
     }
