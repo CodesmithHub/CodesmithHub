@@ -1,5 +1,7 @@
 import React from 'react';
 import MainPage from './mainPage.jsx';
+import LogIn from './login.js';
+import SignUp from './signup.js';
 
 const testData = {
   username: 'David Sally',
@@ -10,9 +12,6 @@ const testData = {
   random: 'I love hiking, especially in Yosemite, and have done some of the best hikes in the valley. I’ve summited half dome under the light of the super moon, and climbed to the peak of cloud’s rest for sunrise. In 2015, I backpacked half of the John Muir trail. This was my first backpacking trip, and was one of the most humbling experiences of my life. I am looking forward to exploring southern California!',
   imgURL: 'http://i.imgur.com/ypzAXKy.jpg',
 };
-
-const user = testData;
-const pageTypes = ['directory, calendar', 'feed', 'profile'];
 
 const items = [
   { username: 'Balal', message: 'I love react!', imgURL: 'https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png'},
@@ -80,9 +79,11 @@ class App extends React.Component {
 
   render() {
     console.log('hello');
+    
+    // UNCOMMENT one of the following views to start
     return (
       <div>Dis be da App
-        <MainPage
+        {/* <MainPage
           user={this.state.user}
           imgURL={this.state.directory[0].imgURL}
           selectedPage={this.state.selectedPage}
@@ -90,9 +91,12 @@ class App extends React.Component {
           feedItems={this.state.feedItems}
           changeView={this.changeView}
           updateStatus={this.updateStatus}
-        />
+        /> */}
+        {/* <LogIn /> */}
+        {/* <SignUp /> */}
       </div>
     );
   }
 }
-export default App;
+
+export default App
