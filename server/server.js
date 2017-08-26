@@ -28,6 +28,8 @@ app.post('/createuser', userController.createUser);
 
 app.post('/login', userController.verifyUser);
 
+app.get('/users', userController.grabUsers);
+
 
 
 
