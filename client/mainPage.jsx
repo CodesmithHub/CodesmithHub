@@ -16,9 +16,7 @@ import NewsFeed from './newsFeed.jsx';
  */
 
 class MainPage extends Component {
-
   render() {
-    console.log('hello');
     let feed;
 
     // DIRECTORY
@@ -52,8 +50,8 @@ class MainPage extends Component {
 
         {/* profile pic / chat */}
         <div className="list-group col-sm-2">
-          <img src={this.props.imgURL} onClick={()=> {this.props.changeView('Profile')}} />
-          <TextField />
+          <img className="prof-pic" src={this.props.imgURL} onClick={()=> {this.props.changeView('Profile')}} />
+          <TextField action={this.props.updateStatus} />
           chat room goes here...
         </div>
 

@@ -21,7 +21,7 @@ const items = [
 const item1 = items[0];
 const item2 = items[1];
 const item3 = items[2];
-const user = testData[0];
+const user = testData;
 
 class App extends React.Component {
   constructor() {
@@ -30,7 +30,7 @@ class App extends React.Component {
       directory: [testData, testData, testData, testData],
       selectedPage: 'Feed',
       feedItems: [item1, item2, item3],
-      user,
+      user: user,
     };
     this.changeView = this.changeView.bind(this);
     this.updateStatus = this.updateStatus.bind(this);
@@ -53,30 +53,10 @@ class App extends React.Component {
    */
   updateStatus(e) {
     e.preventDefault();
-    // if (value.key == 'Enter') {
-      console.log(e);
-    // }
-    // if (e.key === 'Enter') { // enter key
-    //   console.log(`enter key pressed: `);      
-    // }
-    // let newFeed = this.state.feedItems;
-    // newFeed.unshift(newItem);
-    // this.setState({ feedItems: newFeed });
+    if (e.key === 'Enter') {
+      console.log('submit data...');
+    }
   }
-
-  // handle: function(e) {
-  //   e.preventDefault();
-  //   var data = {
-  //     message: React.findDOMNode(this.refs.message).value.trim(),
-  //     created_by: 'David $ally',
-  //   };
-  //   React.findDOMNode(this.refs.message).value = '';
-  //   var that = this;
-  //   this.post(data).done(function(res) {
-  //     that.props.update(res);
-  //   });
-  // },
-
 
   render() {
     console.log('hello');
