@@ -10,7 +10,6 @@ class SignUp extends React.Component {
     this.userInfo = this.userInfo.bind(this)
   }
 
-
   render() {
 
     if (this.state.loggedIn) {
@@ -24,11 +23,11 @@ class SignUp extends React.Component {
         <table>
           <tbody>
             <tr>
-            <th className='header'>CodesmithHub</th>
+            <th className="header">CodesmithHub</th>
             </tr>
             <tr>
-              <td className='tableContent'>
-                <div className='input'>
+              <td className="tableContent">
+                <div className="input">
                   <form>
                       <b>First Name:</b> <input type='text' id='firstname'/>
                       <br/><br/>
@@ -62,13 +61,10 @@ class SignUp extends React.Component {
     )
   }
 
-  componentDidMount() {
-
-  }
-
+  /** This function is used to sign up a user */
     userInfo(e) {
       e.preventDefault();
-      let data = {
+      const data = {
         firstname: document.getElementById('firstname').value,
         lastname: document.getElementById('lastname').value,
         email: document.getElementById('email').value,
@@ -88,11 +84,21 @@ class SignUp extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-    }
 
+    axios.post('/createuser', data)
+    .then((response) => {
+      if (response.status === 200) {
+        console.log('should be logging in...');
+        console.log(this);
+        console.log(this.props);
+        // also need to save user as the newly created user
+        this.props.changeView('Feed');
+      }
+    })
+    .catch((error) => {
+      console.log(`ERROR: ${error}`);
+    });
+  }
 }
-
-
-
 
 export default SignUp;

@@ -10,12 +10,11 @@ const userController = {};
 //connect to Postgres
 pg.connect((err, client, done) => {
     if (err) console.log(err);
-    console.log('connected to db');
+    else console.log('connected to db');
 });
 
-
 //create user in Postgres
-userController.createUser = (request, response) => {
+userController.createUser = (request, response, next) => {
     //encrypt password before saving to DB
     const hash = bcrypt.hashSync(request.body.password, salt);
     pg.query({
@@ -33,21 +32,20 @@ userController.createUser = (request, response) => {
             request.body.random
         ]
     })
-        .then(res => response.status(200).json('User created!'))
+        .then(res => {request.body.return = 'User created!'; next()})
         .catch(err => response.status(400).json('An error occurred: ' + err));
 }
 
 //verify user on login
-userController.verifyUser = (request, response) => {
+userController.verifyUser = (request, response, next) => {
     const email = request.body.email.toLowerCase();
-    //encrypt input password to compare to hashed password stored in DB => **one way encryption**
-    const hash = bcrypt.hashSync(request.body.password, salt);
     pg.query("SELECT * FROM users WHERE email = '" + email + "';")
         .then(res => {
             if (!res.rows.length) response.status(400).json('User not found!');
             else {
                 if (bcrypt.compareSync(request.body.password, res.rows[0].password)) {
-                    response.status(200).json({id: res.rows[0].user_id});
+                    request.body.return = {id: res.rows[0].user_id};
+                    next();
                 } else return response.status(400).json('INCORRECT PASSWORD');
             }
         })
@@ -79,13 +77,12 @@ userController.grabUsers = (request, response) => {
 
 // return list of user posts
 userController.grabPosts = (request, response) => {
-    let id = request.body.user_id;
     pg.query({
         name: 'grab-posts',
         text: "SELECT userposts.post FROM userposts WHERE userposts.user = $1;",
-        values: [id]
+        values: [request.body.user_id]
     })
-        .then(res => { console.log(res.rows); response.status(200).json(res.rows) })
+        .then(res => response.status(200).json(res.rows))
         .catch(err => { console.log('err: ', err); response.status(400).json('Error: ', err) })
 }
 
@@ -97,7 +94,20 @@ userController.addPost = (request, response) => {
         values: [request.body.user_id, request.body.post]
     })
         .then(res => response.status(200).json('Post created!'))
-        .catch(err => response.status(400).json('An error occurred: ' + err));
+        .catch(err => response.status(400).json('An error occurred: ', err));
+}
+
+userController.allPosts = (request, response, next) => {
+    pg.query('SELECT * FROM userposts')
+        .then(res => {
+            let posts = res.rows.reduce((acc, item) => {
+                acc.push({id: item.user, post: item.post});
+                return acc;
+            }, [])
+            request.body.return = posts;
+            next();
+        })
+        .catch(err => response.status(400).json('An error occurred: ', err))
 }
 
 

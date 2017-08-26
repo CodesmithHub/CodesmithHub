@@ -4,7 +4,6 @@ import SignUp from './signup.js';
 import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
 import MainPage from './mainPage.jsx';
 
-
 class LogIn extends React.Component {
 
   constructor() {
@@ -52,8 +51,7 @@ class LogIn extends React.Component {
   loginInfo(e) {
     e.preventDefault();
 
-    console.log('hello')
-    let data = {
+    const data = {
       email: document.getElementById('loginEmail').value,
       password: document.getElementById('loginPassword').value
     }
@@ -61,22 +59,15 @@ class LogIn extends React.Component {
     axios.post('/login', data)
     .then((response) => {
       console.log(this);
-      if (response.status === 200) this.setState({loggedIn: true});
-      console.log(response);
+      if (response.status === 200) {
+        this.setState({loggedIn: true})
+        this.props.setID(response.data.id);
+      }
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch((error) => {
+      console.log(`ERROR: ${error}`);
     });
   }
-
-
 }
-
-
-
-
-
-
-
 
 export default LogIn;

@@ -7,14 +7,50 @@ import React, { Component } from 'react';
  */
 class TextField extends Component {
 
+  constructor() {
+    super();
+    this.newsPost = this.newsPost.bind(this);
+  }
+
   render() {
     return (
       <div className="text-field">
-        {/* <form action={() => { console.log('field submitted!'); return false; }}> */}
-          <input type="text" placeholder="Status.." onKeyUp={(event) => { this.props.action(event) }} />
-        {/* </form> */}
+        <input
+          id="text-field"
+          type="text"
+          placeholder="Status.."
+          onKeyUp={(event) => { this.newsPost(event); }}
+        />
       </div>
     );
+  }
+
+    /**
+   * Detect the enter key being pressed and appends a new feed item
+   * Send userID and message
+   * @param {e} event - keypress
+   */
+  newsPost(e) {
+    e.preventDefault();
+    if (e.key === 'Enter') {
+      const data = {
+        user_id: this.props.userID,
+        post: document.getElementById('text-field').value,
+      };
+
+      console.log(`Posting the following: ${data.user_id}  ${data.post}`);
+
+      axios.post('/newpost', data)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log('success!');
+          console.log(response);
+        }
+      })
+      .catch((err) => {
+        console.log(`ERROR: ${err}`);
+      });
+    }
   }
 }
 
