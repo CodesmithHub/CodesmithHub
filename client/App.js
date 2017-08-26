@@ -21,6 +21,7 @@ const items = [
 const item1 = items[0];
 const item2 = items[1];
 const item3 = items[2];
+const user = testData[0];
 
 class App extends React.Component {
   constructor() {
@@ -83,7 +84,7 @@ class App extends React.Component {
     // UNCOMMENT one of the following views to start
     return (
       <div>Dis be da App
-        {/* <MainPage
+        <MainPage
           user={this.state.user}
           imgURL={this.state.directory[0].imgURL}
           selectedPage={this.state.selectedPage}
@@ -91,7 +92,7 @@ class App extends React.Component {
           feedItems={this.state.feedItems}
           changeView={this.changeView}
           updateStatus={this.updateStatus}
-        /> */}
+        />
         {/* <LogIn /> */}
         {/* <SignUp /> */}
       </div>
