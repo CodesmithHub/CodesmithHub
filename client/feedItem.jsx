@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class FeedItem extends Component {
-  
+
   render() {
     return (
       <li className="feed-item">

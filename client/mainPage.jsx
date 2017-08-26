@@ -80,8 +80,7 @@ class MainPage extends Component {
     }
 
     else {
-      console.log('props', this.props.selectedPage)
-      console.log('what am i doing??')      
+      console.log('ERROR: Shouldnt be here');
     }
 
     return (
