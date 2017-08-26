@@ -28,28 +28,23 @@ class Directory extends Component {
     });
   }
 
-
-
   render() {
 
     // DIRECTORY
 
-    let listItems = this.props.directory
-    let viewProfile = this.props.viewProfile
-    console.log(this.props)
-
-
-
+    // let listItems = this.props.directory;
+    let viewProfile = this.props.viewProfile;
+    
     let cohortList = [];
 
-    for (let i = 0; i < listItems.length; i++) {
+    for (let i = 0; i < this.props.listItems.length; i++) {
       cohortList.push(
         <DirectoryItem
-          username={listItems[i].firstname + '  ' + listItems[i].lastname}
+          username={this.props.listItems[i].firstname + '  ' + this.props.listItems[i].lastname}
           imgURL='https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png'
           viewProfile={viewProfile}
           key={i}
-          id={listItems[i].id}
+          id={this.props.listItems[i].id}
         />,
       );
     }
