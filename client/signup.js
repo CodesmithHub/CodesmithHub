@@ -30,7 +30,7 @@ class SignUp extends React.Component {
                       <br/><br/>
                       <b>Email:</b> <input type='text' id='email'/>
                       <br/><br/>
-                      <b>Password:</b> <input type='text' id='password'/>
+                      <b>Password:</b> <input type='password' id='password'/>
                       <br/><br/>
                       <b>Where do you consider yourself from?</b> <input type='text' id='hometown'/>
                       <br/><br/>
@@ -54,7 +54,7 @@ class SignUp extends React.Component {
   }
 
   componentDidMount() {
-    
+
   }
 
     userInfo() {

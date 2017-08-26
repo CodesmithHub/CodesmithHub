@@ -1,5 +1,5 @@
 body {
-  
+
 }
 
 /* PROFILE PAGE */
@@ -60,7 +60,7 @@ p {
   width: 100%; */
 
   /* 20% of the viewport width */
-  /* width:20vw; 
+  /* width:20vw;
   height: 20vw; */
 
   width:100%;
@@ -94,4 +94,22 @@ p {
   border: 2px solid green;
   margin: auto;
   height: 100%;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+
+.header {
+  color: white;
+  background-color: blue;
+}
+
+.tablecontent {
+  background: GhostWhite;
 }

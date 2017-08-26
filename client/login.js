@@ -6,7 +6,7 @@ class LogIn extends React.Component {
   constructor() {
     super();
 
-    // this.loginInfo = this.loginInfo.bind(this)
+    this.loginInfo = this.loginInfo.bind(this)
 }
 
 render() {
@@ -25,7 +25,7 @@ render() {
                 <form>
                   <b>Email:</b> <input type='text' id='loginEmail' />
                   <br/><br/>
-                  <b>Password:</b> <input type='text' id='loginPassword'/>
+                  <b>Password:</b> <input type='password' id='loginPassword'/>
                 </form>
               </div>
               <br/><br/>
@@ -41,33 +41,26 @@ render() {
 }
 
 
-// componentDidMount() {
-//   this.loginInfo();
-// }
-//
-//   loginInfo() {
-//     let data = {
-//       firstname: 'Balal',
-//       lastname: 'Zuhair',
-//       email: document.getElementById('loginEmail').value,
-//       password: document.getElementById('loginPassword').value,
-//       hometown: 'Los Angeles',
-//       past: 'Chemistry',
-//       future: 'Coding',
-//       hobbies: 'Kicking ass',
-//       random: 'There was a time when I ate ONLY kimchi.'
-//     }
-//
-//     axios.post('/login', data)
-//     .then(function (response) {
-//       console.log(response);
-//     })
-//     .catch(function (error) {
-//       console.log(error);
-//     });
-//   }
+componentDidMount() {
+  this.loginInfo();
+}
 
-//
+  loginInfo() {
+    let data = {
+      email: document.getElementById('loginEmail').value,
+      password: document.getElementById('loginPassword').value
+    }
+
+    axios.post('/login', data)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+
 }
 
 
