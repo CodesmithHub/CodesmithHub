@@ -19,9 +19,11 @@ class MainPage extends Component {
 
   /** Get a list of user's when directory is clicked */
   componentDidMount() {
+    this.props.fetchPosts();
     axios.get('/users')
     .then((response) => {
       this.props.updateDirectory(response.data);
+      this.props.setUser(this.props.user);
     })
     .catch(() => {
       console.log('GET ERROR');
@@ -36,7 +38,7 @@ class MainPage extends Component {
       feed = (<Directory
       listItems={this.props.directory}
       viewProfile={this.props.viewProfile}
-    />);
+      />);
     }
 
     // SEE YOUR PROFILE PAGE
@@ -54,31 +56,47 @@ class MainPage extends Component {
 
     // VIEW A PROFILE PAGE
     else if (this.props.selectedPage === 'ViewPage') {
-      console.log(this.props.selectedUser);
-      feed = (<ProfilePage
-        username={this.props.selectedUser.username}
-        hometown={this.props.selectedUser.hometown}
-        past={this.props.selectedUser.past}
-        future={this.props.selectedUser.future}
-        hobbies={this.props.selectedUser.hobbies}
-        random={this.props.selectedUser.random}
-        imgURL={this.props.selectedUser.imgURL}
-      />);
+
+      feed = (
+        <ProfilePage
+          username={this.props.selectedUser.username}
+          hometown={this.props.selectedUser.hometown}
+          past={this.props.selectedUser.past}
+          future={this.props.selectedUser.future}
+          hobbies={this.props.selectedUser.hobbies}
+          random={this.props.selectedUser.random}
+          imgURL={this.props.selectedUser.imgURL}
+          id={this.props.selectedUser.id}
+        />
+      );
     }
 
     // NEWS FEED
     else if (this.props.selectedPage === 'Feed') {
+      console.log('FEED');
+      // this.props.fetchPosts();
+      console.log(this.props.feedItems);
       feed = <NewsFeed feedItems={this.props.feedItems} />;
+    }
+
+    else {
+      console.log('props', this.props.selectedPage)
+      console.log('what am i doing??')      
     }
 
     return (
       <div className="main-page">
         <h1> MAIN </h1>
 
+        {/* src={this.props.user.imgURL} */}
         {/* profile pic / chat */}
         <div className="list-group col-sm-2">
-          <img className="prof-pic" src={this.props.user.imgURL} onClick={()=> {this.props.changeView('Profile')}} />
-          <TextField action={this.props.updateStatus} />
+          <img
+            className="prof-pic"
+            src="https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png"
+            onClick={() => { this.props.changeView('Profile'); }}
+          />
+          <TextField userID={this.props.user.id} />
           chat room goes here...
         </div>
 

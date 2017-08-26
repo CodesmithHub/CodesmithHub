@@ -1,80 +1,63 @@
-import React, { Component } from 'react'
-import { render } from 'react-dom'
+import React, { Component } from 'react';
 
 class LogIn extends React.Component {
 
-  constructor() {
-    super();
+  render() {
 
-    // this.loginInfo = this.loginInfo.bind(this)
+    console.log(this.props);
+    this.loginInfo = this.loginInfo.bind(this);
+
+    return (
+      <div>
+        <table>
+            <tbody>
+            <tr>
+            <th className="header">CodesmithHub</th>
+            </tr>
+            <tr>
+              <td className="tableContent">
+                <div className="input">
+                  <form>
+                    <b>Email:</b> <input type="text" id="loginEmail" />
+                    <br/><br/>
+                    <b>Password:</b> <input type="password" id="loginPassword" />
+                  </form>
+                </div>
+                <br/>
+                <br/>
+                <button type="submit" onClick={this.loginInfo}>LogIn</button>
+                <button type="Login" onClick={() => { this.props.changeView('SignUp'); }} >SignUp?</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  loginInfo() {
+    const data = {
+      email: document.getElementById('loginEmail').value,
+      password: document.getElementById('loginPassword').value,
+    };
+
+    axios.post('/login', data)
+    .then((response) => {
+      if (response.status === 200) {
+        console.log('should be logging in...');
+        this.props.setID(response.data.id);
+        // need to set user to logged in user
+        this.props.changeView('Feed');
+      }
+    })
+    .catch((error) => {
+      console.log(`ERROR: ${error}`);
+    });
+  }
+
+  changeView() {}
+
+  setID() {}
 }
-
-render() {
-
-
-  return (
-    <div>
-      <table>
-          <tbody>
-          <tr>
-          <th className='header'>CodesmithHub</th>
-          </tr>
-          <tr>
-            <td className='tableContent'>
-              <div className='input'>
-                <form>
-                  <b>Email:</b> <input type='text' id='loginEmail' />
-                  <br/><br/>
-                  <b>Password:</b> <input type='text' id='loginPassword'/>
-                </form>
-              </div>
-              <br/><br/>
-              <button type='submit' onClick={this.loginInfo}>LogIn</button>
-              <button>SignUp?</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  )
-
-}
-
-
-// componentDidMount() {
-//   this.loginInfo();
-// }
-//
-//   loginInfo() {
-//     let data = {
-//       firstname: 'Balal',
-//       lastname: 'Zuhair',
-//       email: document.getElementById('loginEmail').value,
-//       password: document.getElementById('loginPassword').value,
-//       hometown: 'Los Angeles',
-//       past: 'Chemistry',
-//       future: 'Coding',
-//       hobbies: 'Kicking ass',
-//       random: 'There was a time when I ate ONLY kimchi.'
-//     }
-//
-//     axios.post('/login', data)
-//     .then(function (response) {
-//       console.log(response);
-//     })
-//     .catch(function (error) {
-//       console.log(error);
-//     });
-//   }
-
-//
-}
-
-
-
-
-
-
-
 
 export default LogIn;
