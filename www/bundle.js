@@ -22468,15 +22468,21 @@ var App = function (_React$Component) {
         'div',
         null,
 <<<<<<< HEAD
+<<<<<<< HEAD
         'Dis be da App'
 =======
+=======
+>>>>>>> a7b741d996e68ec393b1b1212e4069e797ae65c3
         'Dis be da App',
         _react2.default.createElement(_mainPage2.default, {
           imgURL: this.state.directory[0].imgURL,
           selectedPage: this.state.selectedPage,
           directory: this.state.directory
         })
+<<<<<<< HEAD
 >>>>>>> 4f6a45b55fd299433b745cf7b22fbe9d762d8ab8
+=======
+>>>>>>> a7b741d996e68ec393b1b1212e4069e797ae65c3
       );
     }
   }]);
