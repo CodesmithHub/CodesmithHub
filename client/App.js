@@ -28,7 +28,7 @@ class App extends React.Component {
     super();
     this.state = {
       directory: [testData, testData, testData, testData],
-      selectedPage: 'Feed',
+      selectedPage: 'Login',
       feedItems: [item1, item2, item3],
       user,
       selectedUser: user,
@@ -85,22 +85,36 @@ class App extends React.Component {
 
   render() {    
     // UNCOMMENT one of the following views to start
+
+    // CONDITIONAL RENDERING
+    let page;
+    if (this.state.selectedPage === 'Login') {
+      page = <LogIn changeView={this.changeView} />;
+    }
+
+    else if (this.state.selectedPage === 'SignUp') {
+      page = <SignUp changeView={this.changeView} />;
+    }
+
+    else {
+      page = (<MainPage
+        user={this.state.user}
+        imgURL={this.state.directory[0].imgURL}
+        selectedPage={this.state.selectedPage}
+        directory={this.state.directory}
+        feedItems={this.state.feedItems}
+        changeView={this.changeView}
+        updateStatus={this.updateStatus}
+        updateDirectory={this.updateDirectory}
+        viewProfile={this.viewProfile}
+        selectedUser={this.state.selectedUser}
+      />);
+    }
+
     return (
-      <div>Dis be da App
-        <MainPage
-          user={this.state.user}
-          imgURL={this.state.directory[0].imgURL}
-          selectedPage={this.state.selectedPage}
-          directory={this.state.directory}
-          feedItems={this.state.feedItems}
-          changeView={this.changeView}
-          updateStatus={this.updateStatus}
-          updateDirectory={this.updateDirectory}
-          viewProfile={this.viewProfile}
-          selectedUser={this.state.selectedUser}
-        />
-        {/* <LogIn /> */}
-        {/* <SignUp /> */}
+      <div>
+        Dis be da App
+        {page}
       </div>
     );
   }
