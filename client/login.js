@@ -5,6 +5,7 @@ class LogIn extends React.Component {
   render() {
 
     console.log(this.props);
+    this.loginInfo = this.loginInfo.bind(this);
 
     return (
       <div>
@@ -44,9 +45,7 @@ class LogIn extends React.Component {
     .then((response) => {
       if (response.status === 200) {
         console.log('should be logging in...');
-        console.log(this);        
-        console.log(this.props);
-
+        this.props.setID(response.data.id);
         // need to set user to logged in user
         this.props.changeView('feed');
       }
@@ -55,6 +54,10 @@ class LogIn extends React.Component {
       console.log(`ERROR: ${error}`);
     });
   }
+
+  changeView() {}
+
+  setID() {}
 }
 
 export default LogIn;

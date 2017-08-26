@@ -8,14 +8,15 @@ import React, { Component } from 'react';
  */
 class ProfilePage extends Component {
 
+  // {/* src={this.props.imgURL} */}
+
   render() {
-    console.log('username: ', this.props.username)
     return (
       <div className="profile-page">
         <img
           className="profile-pic"
           alt="profile pic"
-          src={this.props.imgURL}
+          src='https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png'
         />
         <h1 className="username">{this.props.username}</h1>
         <div className="questions">

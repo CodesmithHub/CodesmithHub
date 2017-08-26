@@ -22,6 +22,7 @@ class MainPage extends Component {
     axios.get('/users')
     .then((response) => {
       this.props.updateDirectory(response.data);
+      this.props.setUser(this.props.user);
     })
     .catch(() => {
       console.log('GET ERROR');
@@ -41,6 +42,7 @@ class MainPage extends Component {
 
     // SEE YOUR PROFILE PAGE
     else if (this.props.selectedPage === 'Profile') {
+      console.log(this.props.user);
       feed = (<ProfilePage
         username={this.props.user.username}
         hometown={this.props.user.hometown}
@@ -75,9 +77,14 @@ class MainPage extends Component {
       <div className="main-page">
         <h1> MAIN </h1>
 
+        {/* src={this.props.user.imgURL} */}
         {/* profile pic / chat */}
         <div className="list-group col-sm-2">
-          <img className="prof-pic" src={this.props.user.imgURL} onClick={()=> {this.props.changeView('Profile')}} />
+          <img
+            className="prof-pic"
+            src="https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png"
+            onClick={() => { this.props.changeView('Profile'); }}
+          />
           <TextField action={this.props.updateStatus} />
           chat room goes here...
         </div>

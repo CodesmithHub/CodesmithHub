@@ -37,6 +37,8 @@ class App extends React.Component {
     this.updateStatus = this.updateStatus.bind(this);
     this.updateDirectory = this.updateDirectory.bind(this);
     this.viewProfile = this.viewProfile.bind(this);
+    this.setUser = this.setUser.bind(this);
+    this.setID = this.setID.bind(this);
   }
 
   /**
@@ -66,6 +68,27 @@ class App extends React.Component {
     this.setState({ directory: newDirectory });
   }
 
+  setID(userID) {
+    console.log('setting userID');
+    this.setState({ user: userID });
+  }
+
+  setUser(userID) {
+    console.log('setting USER');
+    let userToSet;
+    // find userID in directory
+    for (let i = 0; i < this.state.directory.length; i += 1) {
+      const user2 = this.state.directory[i];
+      if (user2.id === userID) {
+        userToSet = user2;
+        console.log(userToSet);
+      }
+    }
+    userToSet.username = userToSet.firstname + ' ' + userToSet.lastname;
+    
+    this.setState({ user: userToSet });
+  }
+
   /** go to profile page */
   viewProfile(userID) {
     let selectedUser;
@@ -89,11 +112,11 @@ class App extends React.Component {
     // CONDITIONAL RENDERING
     let page;
     if (this.state.selectedPage === 'Login') {
-      page = <LogIn changeView={this.changeView} />;
+      page = <LogIn changeView={this.changeView} setID={this.setID} />;
     }
 
     else if (this.state.selectedPage === 'SignUp') {
-      page = <SignUp changeView={this.changeView} />;
+      page = <SignUp changeView={this.changeView} setID={this.setID} />;
     }
 
     else {
@@ -108,7 +131,9 @@ class App extends React.Component {
         updateDirectory={this.updateDirectory}
         viewProfile={this.viewProfile}
         selectedUser={this.state.selectedUser}
-      />);
+        setUser={this.setUser}
+        setID={this.setID}
+        />);
     }
 
     return (
