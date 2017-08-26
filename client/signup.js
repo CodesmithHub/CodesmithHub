@@ -72,7 +72,7 @@ class SignUp extends React.Component {
         console.log(this);
         console.log(this.props);
         // also need to save user as the newly created user
-        this.props.changeView('feed');
+        this.props.changeView('Feed');
       }
     })
     .catch((error) => {

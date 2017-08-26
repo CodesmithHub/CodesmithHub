@@ -47,7 +47,7 @@ class LogIn extends React.Component {
         console.log('should be logging in...');
         this.props.setID(response.data.id);
         // need to set user to logged in user
-        this.props.changeView('feed');
+        this.props.changeView('Feed');
       }
     })
     .catch((error) => {

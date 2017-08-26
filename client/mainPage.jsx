@@ -70,7 +70,14 @@ class MainPage extends Component {
 
     // NEWS FEED
     else if (this.props.selectedPage === 'Feed') {
+      console.log('FEED');
+      console.log(this.props.feedItems);
       feed = <NewsFeed feedItems={this.props.feedItems} />;
+    }
+
+    else {
+      console.log('props', this.props.selectedPage)
+      console.log('what am i doing??')      
     }
 
     return (
