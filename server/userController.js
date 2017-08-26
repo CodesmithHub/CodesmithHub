@@ -1,6 +1,8 @@
 const { Client } = require('pg');
 const connectionString = 'postgres://taviagze:xhNoQjlMqnEg86XbeWnAyTN-TEl_Dqyc@stampy.db.elephantsql.com:5432/taviagze';
-const pg = new Client({ connectionString: connectionString });
+const pg = new Client({ connectionString });
+const bcrypt = require('bcryptjs');
+const salt = bcrypt.genSaltSync(10);
 
 const userController = {};
 
@@ -13,16 +15,17 @@ pg.connect((err, client, done) => {
 
 
 //create user in Postgres
-
 userController.createUser = (request, response) => {
+    //encrypt password before saving to DB
+    const hash = bcrypt.hashSync(request.body.password, salt);
     pg.query({
         name: 'create-user',
         text: "INSERT INTO users (firstname, lastname, email, password, hometown, past, future, hobbies, random) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);",
         values: [
             request.body.firstname,
             request.body.lastname,
-            request.body.email,
-            request.body.password,
+            request.body.email.toLowerCase(),
+            hash,
             request.body.hometown,
             request.body.past,
             request.body.future,
@@ -35,14 +38,15 @@ userController.createUser = (request, response) => {
 }
 
 //verify user on login
-
 userController.verifyUser = (request, response) => {
-    let email = request.body.email;
+    const email = request.body.email.toLowerCase();
+    //encrypt input password to compare to hashed password stored in DB => **one way encryption**
+    const hash = bcrypt.hashSync(request.body.password, salt);
     pg.query("SELECT * FROM users WHERE email = '" + email + "';")
         .then(res => {
             if(!res.rows.length) response.status(400).json('User not found!');
             else {
-                if(res.rows[0].password === request.body.password) response.status(200).json('OK');
+                if(res.rows[0].password === hash) response.status(200).json('OK');
                 else return response.status(400).json('INCORRECT PASSWORD');
             }
         })
