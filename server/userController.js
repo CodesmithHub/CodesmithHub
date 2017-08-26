@@ -53,6 +53,29 @@ userController.verifyUser = (request, response) => {
         .catch(err => response.status(400).json('Something went wrong: ', err));
 }
 
+// return list of users
+userController.grabUsers = (request, response) => {
+    pg.query("SELECT * FROM users")
+        .then(res => {
+            let users = res.rows.reduce((acc, user) => {
+                acc.push({
+                    id: user.user_id,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email,
+                    hometown: user.hometown,
+                    past: user.past,
+                    future: user.future,
+                    hobbies: user.hobbies,
+                    random: user.random
+                })
+                return acc;
+            }, []);
+            response.status(200).json(users);
+        })
+        .catch(err => {console.log(err); response.status(400).json('Something went wrong: ', err)});
+}
+
 
 
 module.exports = userController;
