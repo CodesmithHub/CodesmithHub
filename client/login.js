@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
-import { render } from 'react-dom'
+import React, { Component } from 'react';
 
 class LogIn extends React.Component {
 
   render() {
+
+    console.log(this.props);
+
     return (
       <div>
         <table>
@@ -17,13 +19,13 @@ class LogIn extends React.Component {
                   <form>
                     <b>Email:</b> <input type="text" id="loginEmail" />
                     <br/><br/>
-                    <b>Password:</b> <input type="text" id="loginPassword"/>
+                    <b>Password:</b> <input type="password" id="loginPassword" />
                   </form>
                 </div>
                 <br/>
                 <br/>
                 <button type="submit" onClick={this.loginInfo}>LogIn</button>
-                <button onClick={ () => { this.props.changeView('SignUp'); }} >SignUp?</button>
+                <button type="Login" onClick={() => { this.props.changeView('SignUp'); }} >SignUp?</button>
               </td>
             </tr>
           </tbody>
@@ -33,22 +35,24 @@ class LogIn extends React.Component {
   }
 
   loginInfo() {
-    let data = {
+    const data = {
       email: document.getElementById('loginEmail').value,
-      password: document.getElementById('loginPassword').value
+      password: document.getElementById('loginPassword').value,
     };
 
     axios.post('/login', data)
-    .then(function (response) {
-      console.log(response);
+    .then((response) => {
       if (response.status === 200) {
+        console.log('should be logging in...');
+        console.log(this);        
+        console.log(this.props);
 
         // need to set user to logged in user
         this.props.changeView('feed');
       }
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch((error) => {
+      console.log(`ERROR: ${error}`);
     });
   }
 }

@@ -103,6 +103,16 @@ p {
   margin: auto;
 }
 
+.text-field input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 .col-sm-2 {
   border: 1px solid red;
   margin: auto;
@@ -115,7 +125,7 @@ p {
   height: 100%;
 }
 
-/* LOG IN */
+/* LOG IN / SIGN UP */
 table {
   border-collapse: collapse;
 }
@@ -124,7 +134,6 @@ table, th, td {
   border: 1px solid black;
 }
 
-
 .header {
 color: white;
 background-color: blue;
@@ -132,14 +141,4 @@ background-color: blue;
 
 .tablecontent {
   background: GhostWhite;
-}
-
-.text-field input {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
 }
