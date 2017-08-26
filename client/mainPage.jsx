@@ -43,7 +43,6 @@ class MainPage extends Component {
 
     // SEE YOUR PROFILE PAGE
     else if (this.props.selectedPage === 'Profile') {
-      console.log(this.props.user);
       feed = (<ProfilePage
         username={this.props.user.username}
         hometown={this.props.user.hometown}
@@ -57,16 +56,19 @@ class MainPage extends Component {
 
     // VIEW A PROFILE PAGE
     else if (this.props.selectedPage === 'ViewPage') {
-      console.log(this.props.selectedUser);
-      feed = (<ProfilePage
-        username={this.props.selectedUser.username}
-        hometown={this.props.selectedUser.hometown}
-        past={this.props.selectedUser.past}
-        future={this.props.selectedUser.future}
-        hobbies={this.props.selectedUser.hobbies}
-        random={this.props.selectedUser.random}
-        imgURL={this.props.selectedUser.imgURL}
-      />);
+
+      feed = (
+        <ProfilePage
+          username={this.props.selectedUser.username}
+          hometown={this.props.selectedUser.hometown}
+          past={this.props.selectedUser.past}
+          future={this.props.selectedUser.future}
+          hobbies={this.props.selectedUser.hobbies}
+          random={this.props.selectedUser.random}
+          imgURL={this.props.selectedUser.imgURL}
+          id={this.props.selectedUser.id}
+        />
+      );
     }
 
     // NEWS FEED

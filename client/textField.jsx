@@ -12,11 +12,15 @@ class TextField extends Component {
     this.newsPost = this.newsPost.bind(this);
   }
 
-
   render() {
     return (
       <div className="text-field">
-        <input id="text-field" type="text" placeholder="Status.." onKeyUp={(event) => { this.newsPost(event); }} />
+        <input
+          id="text-field"
+          type="text"
+          placeholder="Status.."
+          onKeyUp={(event) => { this.newsPost(event); }}
+        />
       </div>
     );
   }
@@ -24,15 +28,17 @@ class TextField extends Component {
     /**
    * Detect the enter key being pressed and appends a new feed item
    * Send userID and message
-   * @param {e} event 
+   * @param {e} event - keypress
    */
   newsPost(e) {
     e.preventDefault();
     if (e.key === 'Enter') {
       const data = {
         user_id: this.props.userID,
-        lastname: document.getElementById('text-field').value,
+        post: document.getElementById('text-field').value,
       };
+
+      console.log(`Posting the following: ${data.user_id}  ${data.post}`);
 
       axios.post('/newpost', data)
       .then((response) => {
