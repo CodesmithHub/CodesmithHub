@@ -15,13 +15,3 @@ table, th, td {
 .tablecontent {
   background: GhostWhite;
 }
-
-#email {
-  height: 40;
-  width: 200px;
-}
-
-#password {
-  height: 40;
-  width: 200px;
-}
