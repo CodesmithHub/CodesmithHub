@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import SignUp from './signup.js';
 import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
-import MainPage from './mainPage.jsx';
+import MainPage from './../components/mainPage.jsx';
 
 class LogIn extends React.Component {
 
