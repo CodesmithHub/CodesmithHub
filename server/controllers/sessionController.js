@@ -7,20 +7,27 @@ const sessionController = {};
 
 
 sessionController.setJWT = (request, response, next) => {
-    let user = {
-        firstname: request.body.firstname,
-        email: request.body.email
-    }
-    let token = jwt.sign(user, secret, {expiresIn: 10000});
-    response.cookie('token', token);
-    next();
+  let user = {
+      firstname: request.body.firstname,
+      email: request.body.email
+  }
+  let token = jwt.sign(user, secret, {expiresIn: 900});
+  response.cookie('token', token);
+  next();
 }
 
 //TODO => finish session verification
 
 sessionController.verifyJWT = (request, response, next) => {
-    // console.log(request.cookies.token);
-    next();
+  jwt.verify(request.cookies.token, secret, (err, decoded) => {
+    if (!decoded) {
+      console.log('LOGIN AGAIN PLEASE')
+      response.send(decoded)
+    } else {
+      console.log(decoded)
+      next();
+    }
+  })
 }
 
 
