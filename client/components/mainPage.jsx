@@ -111,6 +111,7 @@ class MainPage extends Component {
 
   /** Render the main page based on 'selectedPage' */
   render() {
+    console.log('this state', this.state.directory);
     let feed;
 
     // DIRECTORY
