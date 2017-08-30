@@ -41,6 +41,7 @@ app.use('/authenticate', authenticationRouter.router,
 
 // send bundle on all requests
 app.post('/messages', messageController.postMessage)
+app.get('/messages', messageController.getMessages)
 
 // start server
 const server = app.listen(3000, function() {
