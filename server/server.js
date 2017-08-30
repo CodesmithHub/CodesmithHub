@@ -40,7 +40,7 @@ app.use('/authenticate', authenticationRouter.router,
   (request, response) => response.status(200).json(request.body.return));
 
 // send bundle on all requests
-app.post('/messages', messageController.postMessage)
+app.post('/messages', sessionController.verifyJWT, messageController.postMessage)
 app.get('/messages', messageController.getMessages)
 
 // start server
