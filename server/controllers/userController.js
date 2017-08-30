@@ -19,7 +19,7 @@ userController.createUser = (request, response, next) => {
     const hash = bcrypt.hashSync(request.body.password, salt);
     pg.query({
         name: 'create-user',
-        text: "INSERT INTO users (firstname, lastname, email, password, hometown, past, future, hobbies, random) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);",
+        text: "INSERT INTO users (firstname, lastname, email, password, hometown, past, future, hobbies, random, avatar) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);",
         values: [
             request.body.firstname,
             request.body.lastname,
@@ -29,7 +29,8 @@ userController.createUser = (request, response, next) => {
             request.body.past,
             request.body.future,
             request.body.hobbies,
-            request.body.random
+            request.body.random,
+            request.body.avatar,
         ]
     })
         .then(resolution => {
@@ -74,7 +75,8 @@ userController.grabUsers = (request, response) => {
                     past: user.past,
                     future: user.future,
                     hobbies: user.hobbies,
-                    random: user.random
+                    random: user.random,
+                    avatar: user.avatar
                 })
                 return acc;
             }, []);

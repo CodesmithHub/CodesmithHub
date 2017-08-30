@@ -1,23 +1,7 @@
 import React, { Component } from 'react';
 import DirectoryItem from './directoryItem.jsx';
 
-/**
- * Directory will return a page containing a link to all users pages
- *
- * Props: array of users
- *  user array should contain the following data about each user:
- *    1. username
- *    2. imgURL - link to profile img
- *    3. pageURL  - link to profile page
- * 
- * TODO:  1. add a link to user pages,
- *        2. add a link to img URLs
- */
-
 class Directory extends Component {
-
-
-  /** Get a list of user's when directory is clicked */
   componentDidMount() {
     axios.get('/user/all')
     .then((response) => {
@@ -30,11 +14,8 @@ class Directory extends Component {
 
   render() {
 
-    // DIRECTORY
-
-    // let listItems = this.props.directory;
     let viewProfile = this.props.viewProfile;
-    
+
     let cohortList = [];
 
     for (let i = 0; i < this.props.listItems.length; i++) {

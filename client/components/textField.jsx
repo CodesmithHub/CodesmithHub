@@ -7,16 +7,32 @@ import { Redirect } from 'react-router-dom'
  */
 class TextField extends Component {
 
-  constructor() {
-    super();
-    this.newsPost = this.newsPost.bind(this);
-
-    this.state = {
-      authExpired: false
-    }
+  state = {
+    authExpired: false
   }
 
+  newsPost = (e) => {
+    e.preventDefault();
+    if (e.key === 'Enter') {
+      const data = {
+        user_id: this.props.userID,
+        post: document.getElementById('text-field').value,
+      };
+      console.log(`Posting the following: ${data.user_id}  ${data.post}`);
 
+      axios.post('/user/addpost', data)
+      .then((response) => {
+        if (!response.data) {
+          this.setState({
+            authExpired: true
+          })
+        } else {
+          console.log('THIS IS RESPONSE FROM ADDED DATA: *textField line30* ', response.data);
+          this.props.update(response.data)
+        }
+      })
+    }
+  }
 
   render() {
     if (this.state.authExpired) {
@@ -37,34 +53,7 @@ class TextField extends Component {
     );
   }
 
-    /**
-   * Detect the enter key being pressed and appends a new feed item
-   * Send userID and message
-   * @param {e} event - keypress
-   */
-  newsPost(e) {
-    e.preventDefault();
-    if (e.key === 'Enter') {
-      const data = {
-        user_id: this.props.userID,
-        post: document.getElementById('text-field').value,
-      };
 
-      console.log(`Posting the following: ${data.user_id}  ${data.post}`);
-
-      axios.post('/user/addpost', data)
-      .then((response) => {
-        if (!response.data) {
-          this.setState({
-            authExpired: true
-          })
-        }
-      })
-      .catch((err) => {
-        console.log(`ERROR: ${err}`);
-      });
-    }
-  }
 }
 
 export default TextField;

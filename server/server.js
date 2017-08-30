@@ -13,6 +13,7 @@ const bodyParser = require('body-parser');
 const userController = require('./controllers/userController.js');
 const sessionController = require('./controllers/sessionController.js');
 const authenticationRouter = require('./routers/authenticationRouter.js');
+const messageController = require('./controllers/messageController.js')
 const userRouter = require('./routers/userRouter.js');
 const compiler = webpack(webpackConfig);
 
@@ -34,13 +35,13 @@ app.get('/*', express.static(__dirname + './../www'))
 // all requests to /users get routed to middleware to hit additional sub routes
 app.use('/user', sessionController.verifyJWT, userRouter.router,
   (request, response) => response.status(200).json(request.body.return));
-
 // all requests to /authenticate get routed to middleware to hit additional sub routes
 app.use('/authenticate', authenticationRouter.router,
   (request, response) => response.status(200).json(request.body.return));
 
 // send bundle on all requests
-
+app.post('/messages', sessionController.verifyJWT, messageController.postMessage)
+app.get('/messages', messageController.getMessages)
 
 // start server
 const server = app.listen(3000, function() {
