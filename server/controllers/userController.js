@@ -62,6 +62,7 @@ userController.verifyUser = (request, response, next) => {
 
 // return list of users
 userController.grabUsers = (request, response) => {
+    console.log('hello');
     pg.query("SELECT * FROM users")
         .then(res => {
             let users = res.rows.reduce((acc, user) => {
@@ -97,6 +98,7 @@ userController.grabPosts = (request, response) => {
 
 // create new post in DB
 userController.addPost = (request, response) => {
+    console.log('add post', res)
     pg.query({
         name: 'create-post',
         text: 'INSERT INTO userposts ("user", "post") VALUES ($1, $2);',

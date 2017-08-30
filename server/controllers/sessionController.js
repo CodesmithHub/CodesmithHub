@@ -21,7 +21,6 @@ sessionController.setJWT = (request, response, next) => {
 sessionController.verifyJWT = (request, response, next) => {
   jwt.verify(request.cookies.token, secret, (err, decoded) => {
     if (!decoded) {
-      console.log('LOGIN AGAIN PLEASE')
       response.send(decoded)
     } else {
       next();
