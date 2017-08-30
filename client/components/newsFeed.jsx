@@ -39,7 +39,7 @@ class NewsFeed extends Component {
       <div className="directory">
         <h1 style={{textAlign: 'center'}}>NEWS FEED</h1>
         <ul className="news-feed">
-          {feed}
+          {feed.reverse()}
         </ul>
       </div>
     );

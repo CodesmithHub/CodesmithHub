@@ -7,7 +7,7 @@ import NewsFeed from './newsFeed.jsx';
 import Navbar from './navbar.jsx'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import ChatBox from './chatbox.jsx'
+import ChatBox from './chat/chatbox.jsx'
 
 /**
  * Main will render the main page when a user logs in
@@ -151,7 +151,7 @@ class MainPage extends Component {
             onClick={() => { this.changeView('Profile'); }}
           />
           <TextField userID={this.state.user.id} />
-          <ChatBox user={this.state.user.firstname}/>
+          <ChatBox user={this.state.user}/>
         </div>
 
         {/* main window */}
