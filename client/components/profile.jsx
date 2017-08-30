@@ -1,26 +1,23 @@
 import React, { Component } from 'react';
 import FeedItem from './feedItem.jsx';
 
-/**
- * component will return a page with an image and text
- *
- * Props: username, img url, bio questions[5]
- * TODO: don't hard code the imgURL (profile image)
- */
 class ProfilePage extends Component {
 
-  constructor() {
-    super();
-    this.state = {
-      feedItems: [],
-    };
-    this.getFeedItems = this.getFeedItems.bind(this);
+  state = {
+    feedItems: [],
+  }
+
+  componentDidMount () {
+    axios.post('/user/posts', { user_id: this.props.id })
+      .then(res => {
+        this.setState({
+          feedItems: res.data
+        })
+      })
   }
 
   render() {
-
     const imgURL = 'https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png';
-    // parse feed items
     const feed = [];
 
     this.state.feedItems.forEach((message, index) => {
@@ -39,7 +36,7 @@ class ProfilePage extends Component {
         <img
           className="profile-pic"
           alt="profile pic"
-          src='https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png'
+          src={imgURL}
         />
         <h1 className="username">{this.props.username}</h1>
         {feed}
@@ -55,33 +52,12 @@ class ProfilePage extends Component {
           <h4 className="question">What is a fun or random fact about yourself?</h4>
           <p>{this.props.random}</p>
         </div>
+        <button type='submit' onClick={this.handleClick}> Edit </button>
       </div>
     );
   }
 
-  componentDidMount() {
-    this.getFeedItems();
-  }
 
-  /**
-   * GRABS all the posts from a specific user, by sending their userID
-   */
-  getFeedItems() {
-    console.log(`requesting posts from: ${this.props.id}  ${this.props.username}`);
-
-    axios.post('/user/posts', { user_id: this.props.id })
-    .then((res) => {
-      console.log('** recieved posts **');
-      console.log(res.data);
-      console.log('** **');
-
-      this.setState({ feedItems: res.data });
-      // this.state.feedItems = res.data;
-    })
-    .catch((err) => {
-      console.log(`ERROR: ${err}`);
-    });
-  }
 }
 
 export default ProfilePage;

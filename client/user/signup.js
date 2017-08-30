@@ -17,7 +17,7 @@ class SignUp extends React.Component {
         <Redirect to={{pathname: "/main", state: { from: this.state.user } }} />
       )
     }
-    
+
     return (
       <div>
         <table>
@@ -46,6 +46,8 @@ class SignUp extends React.Component {
                       <b>What are your passions and hobbies?</b> <input type='text' id='hobbies'/>
                       <br/><br/>
                       <b>What is a fun or random fact about yourself?</b> <input type='text' id='random'/>
+                      <br/><br/>
+                      <b>Profile Picture: </b> <input type='text' id='picture' />
                   </form>
                 </div>
                 <br/><br/>
@@ -73,7 +75,8 @@ class SignUp extends React.Component {
         past: document.getElementById('past').value,
         future: document.getElementById('future').value,
         hobbies: document.getElementById('hobbies').value,
-        random: document.getElementById('random').value
+        random: document.getElementById('random').value,
+        picture: document.getElementById('picture').value
       }
 
       axios.post('/authenticate/create', data)

@@ -18,7 +18,7 @@ class LogIn extends React.Component {
         <Redirect to={{pathname: "/main", state: { from: this.state.user } }} />
       )
     }
-    
+
     return (
       <div className="login-page">
         <table>
