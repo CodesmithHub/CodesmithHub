@@ -85,6 +85,12 @@ userController.grabUsers = (request, response) => {
         .catch(err => { console.log(err); response.status(400).json('Something went wrong: ', err) });
 }
 
+userController.editUser = (req, res) => {
+  console.log('edit user body: ', req.body)
+  console.log('edit user params: ', req.params)
+
+}
+
 // return list of posts for a given user
 userController.grabPosts = (request, response) => {
     pg.query({
@@ -104,7 +110,7 @@ userController.addPost = (request, response) => {
         text: 'INSERT INTO userposts ("user", "post") VALUES ($1, $2);',
         values: [request.body.user_id, request.body.post]
     })
-        .then(res => response.status(200).json('Post created!'))
+        .then(res => response.status(200).json(request.body))
         .catch(err => response.status(400).json('An error occurred: ', err));
 }
 

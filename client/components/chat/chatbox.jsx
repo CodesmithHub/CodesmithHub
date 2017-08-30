@@ -27,7 +27,6 @@ class ChatBox extends Component {
   }
 
   handleClick = () => {
-    console.log(this.state.text);
     axios.post('/messages', {
       username: this.props.user.firstname,
       message: this.state.text,

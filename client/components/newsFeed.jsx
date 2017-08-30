@@ -14,6 +14,7 @@ class NewsFeed extends Component {
           feedItems: res.data
         })
       })
+      .then(() => console.log('THIS IS NEWSFEED line24:', this.state.feedItems))
   }
   render() {
     const imgURL = 'https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png';
@@ -25,7 +26,7 @@ class NewsFeed extends Component {
             <FeedItem
               username={this.props.directory[j].firstname}
               message={this.state.feedItems[i].post}
-              imgURL={imgURL}
+              imgURL={this.props.directory[j].avatar || 'https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png'}
               key={i}
             />
           )
