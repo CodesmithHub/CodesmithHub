@@ -17,7 +17,6 @@ class ProfilePage extends Component {
   }
 
   render() {
-    const imgURL = 'https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png';
     const feed = [];
 
     this.state.feedItems.forEach((message, index) => {
@@ -25,7 +24,7 @@ class ProfilePage extends Component {
         (<FeedItem
           message={message.post}
           username={this.props.username}
-          imgURL={imgURL}
+          imgURL={this.props.avatar}
           key={index}
         />),
       );
@@ -36,7 +35,7 @@ class ProfilePage extends Component {
         <img
           className="profile-pic"
           alt="profile pic"
-          src={imgURL}
+          src={this.props.avatar}
         />
         <h1 className="username">{this.props.username}</h1>
         {feed}

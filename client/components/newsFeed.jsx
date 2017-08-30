@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import FeedItem from './feedItem.jsx';
 
-
-
 class NewsFeed extends Component {
 
   state = {

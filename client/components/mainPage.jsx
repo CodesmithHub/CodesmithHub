@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Directory from './directory.jsx';
 import ProfilePage from './profile.jsx';
-import Button from './button.jsx';
 import TextField from './textField.jsx';
 import NewsFeed from './newsFeed.jsx';
 import Navbar from './navbar.jsx'
@@ -62,6 +61,10 @@ class MainPage extends Component {
     this.setState({ user: userToSet });
   }
 
+  updateFeed = (newFeed) => {
+    console.log(newFeed)
+  }
+
   viewProfile = (userID) => {
     let selectedUser;
     for (let i = 0; i < this.state.directory.length; i += 1) {
@@ -82,14 +85,13 @@ class MainPage extends Component {
     .then((response) => {
       this.setState({
         directory: response.data,
-
       })
       this.updateDirectory(response.data);
       this.setUser(this.state.user);
     })
-    .catch(() => {
-      console.log('GET ERROR');
-    });
+    .then(res => {
+      console.log('LIST OF ALL USERS: ', this.state.directory)
+    })
   }
 
   /** Render the main page based on 'selectedPage' */
@@ -97,8 +99,6 @@ class MainPage extends Component {
     let feed;
     // DIRECTORY
     if (this.state.selectedPage === 'Directory') {
-      console.log('STATE');
-      console.log(this.state);
       feed = (<Directory
       listItems={this.state.directory}
       viewProfile={this.viewProfile}
@@ -114,6 +114,7 @@ class MainPage extends Component {
         future={this.state.user.future}
         hobbies={this.state.user.hobbies}
         random={this.state.user.random}
+        avatar={this.state.user.avatar}
       />);
     }
 
@@ -147,10 +148,10 @@ class MainPage extends Component {
         <div className="list-group col-sm-2">
           <img
             className="prof-pic"
-            src="https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png"
+            src={this.state.user.avatar}
             onClick={() => { this.changeView('Profile'); }}
           />
-          <TextField userID={this.state.user.id} />
+          <TextField userID={this.state.user.id} update={this.updateFeed}/>
           <ChatBox user={this.state.user}/>
         </div>
 

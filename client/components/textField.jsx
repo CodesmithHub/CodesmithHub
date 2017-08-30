@@ -26,6 +26,9 @@ class TextField extends Component {
           this.setState({
             authExpired: true
           })
+        } else {
+          console.log('THIS IS RESPONSE FROM ADDED DATA: *textField line30* ', response.data);
+          this.props.update(response.data)
         }
       })
     }
