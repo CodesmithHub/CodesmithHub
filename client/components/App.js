@@ -12,7 +12,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>Dis be da App
+      <div>
         <BrowserRouter>
           <div>
             <Route exact path="/" component={LogIn} />

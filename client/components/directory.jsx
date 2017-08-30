@@ -9,7 +9,7 @@ import DirectoryItem from './directoryItem.jsx';
  *    1. username
  *    2. imgURL - link to profile img
  *    3. pageURL  - link to profile page
- * 
+ *
  * TODO:  1. add a link to user pages,
  *        2. add a link to img URLs
  */
@@ -34,7 +34,7 @@ class Directory extends Component {
 
     // let listItems = this.props.directory;
     let viewProfile = this.props.viewProfile;
-    
+
     let cohortList = [];
 
     for (let i = 0; i < this.props.listItems.length; i++) {

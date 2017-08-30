@@ -29,7 +29,8 @@ userController.createUser = (request, response, next) => {
             request.body.past,
             request.body.future,
             request.body.hobbies,
-            request.body.random
+            request.body.random,
+            request.body.picture,
         ]
     })
         .then(resolution => {
@@ -73,7 +74,8 @@ userController.grabUsers = (request, response) => {
                     past: user.past,
                     future: user.future,
                     hobbies: user.hobbies,
-                    random: user.random
+                    random: user.random,
+                    picture: user.picture
                 })
                 return acc;
             }, []);
