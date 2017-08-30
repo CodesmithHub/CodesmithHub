@@ -96,6 +96,7 @@ userController.grabPosts = (request, response) => {
 
 // create new post in DB
 userController.addPost = (request, response) => {
+    console.log('add post', res)
     pg.query({
         name: 'create-post',
         text: 'INSERT INTO userposts ("user", "post") VALUES ($1, $2);',

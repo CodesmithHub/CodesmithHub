@@ -36,6 +36,16 @@ describe('server unit tests', () => {
       });
 	});
 
+	it('should respond with "OK" status message', (done) => {
+		request(HOST)
+			.get('/')
+      .end((err, res) => {
+      	if (err) done(err); 
+      	assert(res.ok === true, 'expected status message to equal "OK"');
+      	done();
+      });
+	});
+
 	it('should create a new user in database', (done) => {
     request(HOST)
     	.post('/authenticate/validate')
@@ -45,7 +55,6 @@ describe('server unit tests', () => {
     		assert(res.body.id !== undefined, 'expected id to not be undefined');
     		done();
     	})
-
   })
 
   it('should verify that a given user exists', (done) => {
@@ -57,19 +66,18 @@ describe('server unit tests', () => {
     		assert(res.body.id == 252, 'expected id to equal 252');
     		done();
     	})
-
   })
 
-  it('should return a list of users', () => {
-    
-  })
-
-  it('should return a list of posts for a given user', () => {
-    
-  })
-
-  it('should create a new post in db', () => {
-    
+  it('should successfully post new status to news feed', (done) => {
+    request(HOST)
+    	.get('/authenticate/validate/allposts/main')
+    	.send({ email: 'test1234@test.com', password: 'password', message: 'some message' })
+    	.end((err, res) => {
+    		console.log('res object', res);
+    		if (err) done(err); 
+    		// assert(res.body.id == 252, 'expected id to equal 252');
+    		done();
+    	})
   })
 }) 
 
