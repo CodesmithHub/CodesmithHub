@@ -70,7 +70,7 @@ describe('server unit tests', () => {
 
   it('should successfully post new status to news feed', (done) => {
     request(HOST)
-    	.get('/authenticate/validate/allposts/main')
+    	.get('/authenticate/validate/user/main')
     	.send({ email: 'test1234@test.com', password: 'password', message: 'some message' })
     	.end((err, res) => {
     		console.log('res object', res);
