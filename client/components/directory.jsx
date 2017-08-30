@@ -22,7 +22,7 @@ class Directory extends Component {
       cohortList.push(
         <DirectoryItem
           username={this.props.listItems[i].firstname + '  ' + this.props.listItems[i].lastname}
-          imgURL='https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png'
+          imgURL={this.props.listItems[i].avatar || 'https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png'}
           viewProfile={viewProfile}
           key={i}
           id={this.props.listItems[i].id}

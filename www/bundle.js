@@ -8400,7 +8400,8 @@ var MainPage = function (_Component) {
       directory: [],
       selectedPage: 'Login',
       user: {},
-      selectedUser: {}
+      selectedUser: {},
+      addFeed: null
     }, _this.changeView = function (buttonName) {
       console.log('---> ' + buttonName);
       _this.setState({ selectedPage: buttonName });
@@ -8425,7 +8426,9 @@ var MainPage = function (_Component) {
       }
       _this.setState({ user: userToSet });
     }, _this.updateFeed = function (newFeed) {
-      console.log(newFeed);
+      _this.setState({
+        addFeed: newFeed
+      });
     }, _this.viewProfile = function (userID) {
       var selectedUser = void 0;
       for (var i = 0; i < _this.state.directory.length; i += 1) {
@@ -8480,32 +8483,35 @@ var MainPage = function (_Component) {
       // SEE YOUR PROFILE PAGE
       else if (this.state.selectedPage === 'Profile') {
           feed = _react2.default.createElement(_profile2.default, {
-            username: this.state.user.username,
+            username: this.state.user.firstname,
             hometown: this.state.user.hometown,
             past: this.state.user.past,
             future: this.state.user.future,
             hobbies: this.state.user.hobbies,
             random: this.state.user.random,
-            avatar: this.state.user.avatar
+            avatar: this.state.user.avatar,
+            edit: this.state.user,
+            userID: this.state.user.id
           });
         }
 
         // VIEW A PROFILE PAGE
         else if (this.state.selectedPage === 'ViewPage') {
             feed = _react2.default.createElement(_profile2.default, {
-              username: this.state.selectedUser.username,
+              username: this.state.selectedUser.firstname,
               hometown: this.state.selectedUser.hometown,
               past: this.state.selectedUser.past,
               future: this.state.selectedUser.future,
               hobbies: this.state.selectedUser.hobbies,
               random: this.state.selectedUser.random,
-              id: this.state.selectedUser.id
+              id: this.state.selectedUser.id,
+              avatar: this.state.selectedUser.avatar
             });
           }
 
           // NEWS FEED
           else if (this.state.selectedPage === 'Feed') {
-              feed = _react2.default.createElement(_newsFeed2.default, { directory: this.state.directory });
+              feed = _react2.default.createElement(_newsFeed2.default, { directory: this.state.directory, newFeed: this.state.addFeed });
             } else {
               console.log('ERROR: Shouldn\'t be here');
             }
@@ -8614,7 +8620,7 @@ var Directory = function (_Component) {
       for (var i = 0; i < this.props.listItems.length; i++) {
         cohortList.push(_react2.default.createElement(_directoryItem2.default, {
           username: this.props.listItems[i].firstname + '  ' + this.props.listItems[i].lastname,
-          imgURL: 'https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png',
+          imgURL: this.props.listItems[i].avatar || 'https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png',
           viewProfile: viewProfile,
           key: i,
           id: this.props.listItems[i].id
@@ -13779,6 +13785,8 @@ var _feedItem2 = _interopRequireDefault(_feedItem);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -13800,7 +13808,28 @@ var ProfilePage = function (_Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ProfilePage.__proto__ || Object.getPrototypeOf(ProfilePage)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      feedItems: []
+      feedItems: [],
+      edit: false,
+      avatar: '',
+      hometown: '',
+      past: '',
+      future: '',
+      hobbies: '',
+      random: ''
+    }, _this.handleChange = function (e) {
+      console.log(e.target.id);
+      console.log(e.target.value);
+      _this.setState(_defineProperty({}, e.target.id, e.target.value));
+    }, _this.handleClick = function () {
+      console.log('hello');
+      _this.setState({
+        edit: true
+      });
+    }, _this.handleClick2 = function (e) {
+      e.preventDefault();
+      var data = {};
+
+      axios.patch('/user/all/' + _this.props.userID, data);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -13818,19 +13847,134 @@ var ProfilePage = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
 
-      var feed = [];
+      if (this.state.edit) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'profile-page' },
+          _react2.default.createElement(
+            'div',
+            { className: 'questions' },
+            _react2.default.createElement(
+              'h4',
+              { className: 'question' },
+              'Edit Avatar'
+            ),
+            _react2.default.createElement('input', { type: 'text', className: 'avatar', value: this.state.avatar, onChange: this.handleChange }),
+            _react2.default.createElement(
+              'h4',
+              { className: 'question' },
+              'Where do you consider yourself from?'
+            ),
+            _react2.default.createElement('input', { type: 'text', className: 'hometown', value: this.state.hometown, onChange: this.handleChange }),
+            _react2.default.createElement(
+              'h4',
+              { className: 'question' },
+              'What were you doing before Codesmith?'
+            ),
+            _react2.default.createElement('input', { type: 'text', className: 'past', value: this.state.past, onChange: this.handleChange }),
+            _react2.default.createElement(
+              'h4',
+              { className: 'question' },
+              'What do you want to do with your coding skills?'
+            ),
+            _react2.default.createElement('input', { type: 'text', className: 'future', value: this.state.future, onChange: this.handleChange }),
+            _react2.default.createElement(
+              'h4',
+              { className: 'question' },
+              'What are your passions and hobbies?'
+            ),
+            _react2.default.createElement('input', { type: 'text', className: 'hobbies', value: this.state.hobbies, onChange: this.handleChange }),
+            _react2.default.createElement(
+              'h4',
+              { className: 'question' },
+              'What is a fun or random fact about yourself?'
+            ),
+            _react2.default.createElement('input', { type: 'text', className: 'random', value: this.state.random, onChange: this.handleChange })
+          ),
+          _react2.default.createElement(
+            'button',
+            { type: 'submit', onClick: this.handleClick2 },
+            ' SAVE '
+          )
+        );
+      }
 
-      this.state.feedItems.forEach(function (message, index) {
-        feed.push(_react2.default.createElement(_feedItem2.default, {
-          message: message.post,
-          username: _this3.props.username,
-          imgURL: _this3.props.avatar,
-          key: index
-        }));
-      });
-
+      if (this.props.edit) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'profile-page' },
+          _react2.default.createElement('img', {
+            className: 'profile-pic',
+            alt: 'profile pic',
+            src: this.props.avatar
+          }),
+          _react2.default.createElement(
+            'h1',
+            { className: 'username' },
+            this.props.username
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'questions' },
+            _react2.default.createElement(
+              'h4',
+              { className: 'question' },
+              'Where do you consider yourself from?'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.hometown
+            ),
+            _react2.default.createElement(
+              'h4',
+              { className: 'question' },
+              'What were you doing before Codesmith?'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.past
+            ),
+            _react2.default.createElement(
+              'h4',
+              { className: 'question' },
+              'What do you want to do with your coding skills?'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.future
+            ),
+            _react2.default.createElement(
+              'h4',
+              { className: 'question' },
+              'What are your passions and hobbies?'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.hobbies
+            ),
+            _react2.default.createElement(
+              'h4',
+              { className: 'question' },
+              'What is a fun or random fact about yourself?'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.random
+            )
+          ),
+          _react2.default.createElement(
+            'button',
+            { type: 'submit', onClick: this.handleClick },
+            ' EDIT '
+          )
+        );
+      }
       return _react2.default.createElement(
         'div',
         { className: 'profile-page' },
@@ -13844,7 +13988,6 @@ var ProfilePage = function (_Component) {
           { className: 'username' },
           this.props.username
         ),
-        feed,
         _react2.default.createElement(
           'div',
           { className: 'questions' },
@@ -13898,11 +14041,6 @@ var ProfilePage = function (_Component) {
             null,
             this.props.random
           )
-        ),
-        _react2.default.createElement(
-          'button',
-          { type: 'submit', onClick: this.handleClick },
-          ' Edit '
         )
       );
     }
@@ -13953,7 +14091,7 @@ var FeedItem = function (_Component) {
       return _react2.default.createElement(
         "li",
         { className: "feed-item" },
-        _react2.default.createElement("img", { src: this.props.imgURL, alt: this.props.username + "'s picture" }),
+        _react2.default.createElement("img", { src: this.props.imgURL, alt: this.props.username + "'s picture", style: { height: 75, width: 120 } }),
         _react2.default.createElement(
           "span",
           null,
@@ -14027,6 +14165,8 @@ var NewsFeed = function (_Component) {
         _this2.setState({
           feedItems: res.data
         });
+      }).then(function () {
+        return console.log('THIS IS NEWSFEED line24:', _this2.state.feedItems);
       });
     }
   }, {
@@ -14040,7 +14180,7 @@ var NewsFeed = function (_Component) {
             feed.push(_react2.default.createElement(_feedItem2.default, {
               username: this.props.directory[j].firstname,
               message: this.state.feedItems[i].post,
-              imgURL: imgURL,
+              imgURL: this.props.directory[j].avatar || 'https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png',
               key: i
             }));
           }
@@ -30518,7 +30658,7 @@ var DirectoryItem = function (_Component) {
           _react2.default.createElement('img', { src: this.props.imgURL, alt: this.props.username + "'s pic",
             onClick: function onClick() {
               _this2.props.viewProfile(_this2.props.id);
-            } })
+            }, style: { height: 80, width: 80 } })
         ),
         _react2.default.createElement(
           'span',
@@ -39254,7 +39394,6 @@ var ChatBox = function (_Component) {
         text: e.target.value
       });
     }, _this.handleClick = function () {
-      console.log(_this.state.text);
       _axios2.default.post('/messages', {
         username: _this.props.user.firstname,
         message: _this.state.text,

@@ -12,9 +12,9 @@ class DirectoryItem extends Component {
 
     return (
         <li className="directory-item">
-          <a href='#'> 
+          <a href='#'>
             <img src={this.props.imgURL} alt={this.props.username + "'s pic"}
-            onClick={() => { this.props.viewProfile(this.props.id); }} />
+            onClick={() => { this.props.viewProfile(this.props.id); }} style={{height: 80, width: 80}}/>
           </a>
           <span>{this.props.username}</span>
         </li>

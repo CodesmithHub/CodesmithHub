@@ -25,6 +25,7 @@ class MainPage extends Component {
     selectedPage: 'Login',
     user: {},
     selectedUser: {},
+    addFeed: null,
   };
 
   changeView = (buttonName) => {
@@ -62,7 +63,9 @@ class MainPage extends Component {
   }
 
   updateFeed = (newFeed) => {
-    console.log(newFeed)
+    this.setState({
+      addFeed: newFeed
+    })
   }
 
   viewProfile = (userID) => {
@@ -108,13 +111,15 @@ class MainPage extends Component {
     // SEE YOUR PROFILE PAGE
     else if (this.state.selectedPage === 'Profile') {
         feed = (<ProfilePage
-        username={this.state.user.username}
+        username={this.state.user.firstname}
         hometown={this.state.user.hometown}
         past={this.state.user.past}
         future={this.state.user.future}
         hobbies={this.state.user.hobbies}
         random={this.state.user.random}
         avatar={this.state.user.avatar}
+        edit={this.state.user}
+        userID={this.state.user.id}
       />);
     }
 
@@ -122,20 +127,21 @@ class MainPage extends Component {
     else if (this.state.selectedPage === 'ViewPage') {
       feed = (
         <ProfilePage
-          username={this.state.selectedUser.username}
+          username={this.state.selectedUser.firstname}
           hometown={this.state.selectedUser.hometown}
           past={this.state.selectedUser.past}
           future={this.state.selectedUser.future}
           hobbies={this.state.selectedUser.hobbies}
           random={this.state.selectedUser.random}
           id={this.state.selectedUser.id}
+          avatar={this.state.selectedUser.avatar}
         />
       );
     }
 
     // NEWS FEED
     else if (this.state.selectedPage === 'Feed') {
-      feed = <NewsFeed directory={this.state.directory}/>;
+      feed = <NewsFeed directory={this.state.directory} newFeed={this.state.addFeed}/>;
     }
 
     else {
