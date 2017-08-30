@@ -51,7 +51,6 @@ userController.verifyUser = (request, response, next) => {
             if (!res.rows.length) response.status(400).json('User not found!');
             else {
                 if (bcrypt.compareSync(request.body.password, res.rows[0].password)) {
-                    console.log('correct password')
                     request.body.return = {id: res.rows[0].user_id};
                     next();
                 } else return response.status(400).json('INCORRECT PASSWORD');
