@@ -104,13 +104,13 @@ p {
   background-color: #36A0E3;
   border: 1px solid #36A0E3;
   margin-left: 15px;
-  margin-right: 15px;  
+  margin-right: 15px;
 }
 
 .button:hover {
   color: #000000;
   background-color: #36A0E3;
-  border: 1px solid #36A0E3;  
+  border: 1px solid #36A0E3;
   /* border-color: #178736; */
   cursor: pointer;
 }
@@ -121,7 +121,7 @@ p {
   background-color: BLACK;
   border-color: #55A96C;
   margin-left: 15px;
-  margin-right: 15px;  
+  margin-right: 15px;
 }
 
 .button-active:hover {
@@ -176,7 +176,6 @@ p {
 }
 
 .col-sm-offset-2 {
-  /* border: 2px solid green; */
   margin: auto;
   height: 100%;
 }
@@ -218,12 +217,12 @@ background-color: blue;
   background-color: #36A0E3;
   border: 1px solid #36A0E3;
   margin-left: 15px;
-  margin-right: 15px;  
+  margin-right: 15px;
 }
 
 .login-page button:hover {
   color: #000000;
   background-color: #36A0E3;
-  border: 1px solid #36A0E3;  
+  border: 1px solid #36A0E3;
   cursor: pointer;
 }

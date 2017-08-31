@@ -19,7 +19,7 @@ userController.createUser = (request, response, next) => {
     const hash = bcrypt.hashSync(request.body.password, salt);
     pg.query({
         name: 'create-user',
-        text: "INSERT INTO users (firstname, lastname, email, password, hometown, past, future, hobbies, random) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);",
+        text: "INSERT INTO users (firstname, lastname, email, password, hometown, past, future, hobbies, random, avatar) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);",
         values: [
             request.body.firstname,
             request.body.lastname,
@@ -29,7 +29,8 @@ userController.createUser = (request, response, next) => {
             request.body.past,
             request.body.future,
             request.body.hobbies,
-            request.body.random
+            request.body.random,
+            request.body.avatar,
         ]
     })
         .then(resolution => {
@@ -53,14 +54,15 @@ userController.verifyUser = (request, response, next) => {
                 if (bcrypt.compareSync(request.body.password, res.rows[0].password)) {
                     request.body.return = {id: res.rows[0].user_id};
                     next();
-                } else return response.status(400).json('INCORRECT PASSWORD');
+                } else return response.status(400).send('INCORRECT PASSWORD');
             }
         })
-        .catch(err => response.status(400).json('Something went wrong: ', err));
+        // .catch(err => response.status(400).json('Something went wrong: ', err));
 }
 
 // return list of users
 userController.grabUsers = (request, response) => {
+    console.log('hello');
     pg.query("SELECT * FROM users")
         .then(res => {
             let users = res.rows.reduce((acc, user) => {
@@ -73,7 +75,8 @@ userController.grabUsers = (request, response) => {
                     past: user.past,
                     future: user.future,
                     hobbies: user.hobbies,
-                    random: user.random
+                    random: user.random,
+                    avatar: user.avatar
                 })
                 return acc;
             }, []);
@@ -82,25 +85,39 @@ userController.grabUsers = (request, response) => {
         .catch(err => { console.log(err); response.status(400).json('Something went wrong: ', err) });
 }
 
+userController.editUser = (req, res) => {
+  console.log('edit user body: ', req.body)
+  console.log('edit user params: ', req.params)
+  pg.query(`
+    UPDATE users
+    SET hometown = '${req.body.hometown}', past = '${req.body.past}', future = '${req.body.future}', hobbies = '${req.body.hobbies}', random = '${req.body.random}', avatar = '${req.body.avatar}'
+    WHERE user_id = ${req.params.id}
+  `)
+  .then(() => {
+    res.send(req.body)
+  })
+}
+
 // return list of posts for a given user
 userController.grabPosts = (request, response) => {
-    pg.query({
-        name: 'grab-posts',
-        text: "SELECT userposts.post FROM userposts WHERE userposts.user = $1;",
-        values: [request.body.user_id]
-    })
-        .then(res => response.status(200).json(res.rows))
-        .catch(err => { console.log('err: ', err); response.status(400).json('Error: ', err) })
+  pg.query({
+      name: 'grab-posts',
+      text: "SELECT userposts.post FROM userposts WHERE userposts.user = $1;",
+      values: [request.body.user_id]
+  })
+    .then(res => response.status(200).json(res.rows))
+    .catch(err => { console.log('err: ', err); response.status(400).json('Error: ', err) })
 }
 
 // create new post in DB
 userController.addPost = (request, response) => {
+    console.log('add post', res)
     pg.query({
         name: 'create-post',
         text: 'INSERT INTO userposts ("user", "post") VALUES ($1, $2);',
         values: [request.body.user_id, request.body.post]
     })
-        .then(res => response.status(200).json('Post created!'))
+        .then(res => response.status(200).json(request.body))
         .catch(err => response.status(400).json('An error occurred: ', err));
 }
 

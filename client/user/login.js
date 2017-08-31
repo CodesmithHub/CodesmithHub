@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import SignUp from './signup.js';
 import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
-import MainPage from './mainPage.jsx';
+import MainPage from './../components/mainPage.jsx';
 
 class LogIn extends React.Component {
 
@@ -18,7 +18,7 @@ class LogIn extends React.Component {
         <Redirect to={{pathname: "/main", state: { from: this.state.user } }} />
       )
     }
-    
+
     return (
       <div className="login-page">
         <table>
@@ -58,14 +58,12 @@ class LogIn extends React.Component {
 
     axios.post('/authenticate/validate', data)
     .then((response) => {
-      console.log(this);
       if (response.status === 200) {
         this.setState({ loggedIn: true, user: response.data.id });
+      } else {
+        console.log('hello')
       }
     })
-    .catch((error) => {
-      console.log(`ERROR: ${error}`);
-    });
   }
 }
 
