@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import FeedItem from './feedItem.jsx';
+import { Redirect } from 'react-router-dom'
 
 class ProfilePage extends Component {
 
   state = {
     feedItems: [],
     edit: false,
-    avatar: '',
-    hometown: '',
-    past: '',
-    future: '',
-    hobbies: '',
-    random: '',
+    avatar: this.props.avatar,
+    hometown: this.props.hometown,
+    past: this.props.past,
+    future: this.props.future,
+    hobbies: this.props.hobbies,
+    random: this.props.random,
+    relog: false,
   }
 
   componentDidMount () {
@@ -24,12 +26,9 @@ class ProfilePage extends Component {
   }
 
   handleChange = (e) => {
-    console.log(e.target.id);
-    console.log(e.target.value)
     this.setState({
-      [e.target.id]: e.target.value
+      [e.target.className]: e.target.value
     })
-
   }
 
   handleClick = () => {
@@ -40,15 +39,32 @@ class ProfilePage extends Component {
   }
 
   handleClick2 = (e) => {
-    e.preventDefault();
+    console.log(this.state.relog)
     const data = {
-
+      hometown: this.state.hometown,
+      past: this.state.past,
+      future: this.state.future,
+      hobbies: this.state.hobbies,
+      random: this.state.random,
+      avatar: this.state.avatar,
     }
-
-    axios.patch(`/user/all/${this.props.userID}`, data)
+    axios.patch(`/user/all/${this.props.id}`, data)
+      .then(() =>
+        this.setState({
+          relog: true
+        })
+      )
   }
 
   render() {
+
+    if (this.state.relog) {
+      if (confirm("Please log in again to confirm changes")) {
+        return (
+          <Redirect to='/' />
+        )
+      }
+    }
 
     if (this.state.edit) {
       return (
@@ -67,7 +83,7 @@ class ProfilePage extends Component {
             <h4 className="question">What is a fun or random fact about yourself?</h4>
               <input type='text' className='random' value={this.state.random} onChange={this.handleChange}/>
           </div>
-          <button type="submit" onClick={this.handleClick2}> SAVE </button>
+          <button className='btn btn-primary rounded pi-btn-default margin-right-10' type="submit" onClick={this.handleClick2}> SAVE </button>
         </div>
       )
     }
@@ -93,7 +109,7 @@ class ProfilePage extends Component {
             <h4 className="question">What is a fun or random fact about yourself?</h4>
             <p>{this.props.random}</p>
           </div>
-          <button type='submit' onClick={this.handleClick} > EDIT </button>
+          <button className='btn btn-primary rounded pi-btn-default margin-right-10' type='submit' onClick={this.handleClick} > EDIT </button>
         </div>
 
       )

@@ -8401,7 +8401,8 @@ var MainPage = function (_Component) {
       selectedPage: 'Login',
       user: {},
       selectedUser: {},
-      addFeed: null
+      addFeed: null,
+      logout: false
     }, _this.changeView = function (buttonName) {
       console.log('---> ' + buttonName);
       _this.setState({ selectedPage: buttonName });
@@ -8440,6 +8441,10 @@ var MainPage = function (_Component) {
       }
       selectedUser.username = selectedUser.firstname + ' ' + selectedUser.lastname;
       _this.setState({ selectedPage: 'ViewPage', selectedUser: selectedUser });
+    }, _this.handleLogOut = function () {
+      _this.setState({
+        logout: true
+      });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -8463,15 +8468,17 @@ var MainPage = function (_Component) {
         console.log('LIST OF ALL USERS: ', _this2.state.directory);
       });
     }
-
-    /** Render the main page based on 'selectedPage' */
-
   }, {
     key: 'render',
+
+    /** Render the main page based on 'selectedPage' */
     value: function render() {
       var _this3 = this;
 
       var feed = void 0;
+      if (this.state.logout) {
+        return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
+      }
       // DIRECTORY
       if (this.state.selectedPage === 'Directory') {
         feed = _react2.default.createElement(_directory2.default, {
@@ -8491,7 +8498,7 @@ var MainPage = function (_Component) {
             random: this.state.user.random,
             avatar: this.state.user.avatar,
             edit: this.state.user,
-            userID: this.state.user.id
+            id: this.state.user.id
           });
         }
 
@@ -8508,7 +8515,6 @@ var MainPage = function (_Component) {
               avatar: this.state.selectedUser.avatar
             });
           }
-
           // NEWS FEED
           else if (this.state.selectedPage === 'Feed') {
               feed = _react2.default.createElement(_newsFeed2.default, { directory: this.state.directory, newFeed: this.state.addFeed });
@@ -8523,6 +8529,11 @@ var MainPage = function (_Component) {
           'h1',
           null,
           ' MAIN '
+        ),
+        _react2.default.createElement(
+          'button',
+          { type: 'submit', className: 'btn btn-primary rounded pi-btn-default margin-right-10', onClick: this.handleLogOut },
+          'Log Out'
         ),
         _react2.default.createElement(
           'div',
@@ -13783,6 +13794,8 @@ var _feedItem = __webpack_require__(156);
 
 var _feedItem2 = _interopRequireDefault(_feedItem);
 
+var _reactRouterDom = __webpack_require__(33);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -13810,26 +13823,35 @@ var ProfilePage = function (_Component) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ProfilePage.__proto__ || Object.getPrototypeOf(ProfilePage)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       feedItems: [],
       edit: false,
-      avatar: '',
-      hometown: '',
-      past: '',
-      future: '',
-      hobbies: '',
-      random: ''
+      avatar: _this.props.avatar,
+      hometown: _this.props.hometown,
+      past: _this.props.past,
+      future: _this.props.future,
+      hobbies: _this.props.hobbies,
+      random: _this.props.random,
+      relog: false
     }, _this.handleChange = function (e) {
-      console.log(e.target.id);
-      console.log(e.target.value);
-      _this.setState(_defineProperty({}, e.target.id, e.target.value));
+      _this.setState(_defineProperty({}, e.target.className, e.target.value));
     }, _this.handleClick = function () {
       console.log('hello');
       _this.setState({
         edit: true
       });
     }, _this.handleClick2 = function (e) {
-      e.preventDefault();
-      var data = {};
-
-      axios.patch('/user/all/' + _this.props.userID, data);
+      console.log(_this.state.relog);
+      var data = {
+        hometown: _this.state.hometown,
+        past: _this.state.past,
+        future: _this.state.future,
+        hobbies: _this.state.hobbies,
+        random: _this.state.random,
+        avatar: _this.state.avatar
+      };
+      axios.patch('/user/all/' + _this.props.id, data).then(function () {
+        return _this.setState({
+          relog: true
+        });
+      });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -13847,6 +13869,12 @@ var ProfilePage = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+
+      if (this.state.relog) {
+        if (confirm("Please log in again to confirm changes")) {
+          return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
+        }
+      }
 
       if (this.state.edit) {
         return _react2.default.createElement(
@@ -13894,7 +13922,7 @@ var ProfilePage = function (_Component) {
           ),
           _react2.default.createElement(
             'button',
-            { type: 'submit', onClick: this.handleClick2 },
+            { className: 'btn btn-primary rounded pi-btn-default margin-right-10', type: 'submit', onClick: this.handleClick2 },
             ' SAVE '
           )
         );
@@ -13970,7 +13998,7 @@ var ProfilePage = function (_Component) {
           ),
           _react2.default.createElement(
             'button',
-            { type: 'submit', onClick: this.handleClick },
+            { className: 'btn btn-primary rounded pi-btn-default margin-right-10', type: 'submit', onClick: this.handleClick },
             ' EDIT '
           )
         );
@@ -15558,12 +15586,11 @@ var LogIn = function (_React$Component) {
       };
 
       axios.post('/authenticate/validate', data).then(function (response) {
-        console.log(_this2);
         if (response.status === 200) {
           _this2.setState({ loggedIn: true, user: response.data.id });
+        } else {
+          console.log('hello');
         }
-      }).catch(function (error) {
-        console.log('ERROR: ' + error);
       });
     }
   }]);

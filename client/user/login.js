@@ -58,14 +58,12 @@ class LogIn extends React.Component {
 
     axios.post('/authenticate/validate', data)
     .then((response) => {
-      console.log(this);
       if (response.status === 200) {
         this.setState({ loggedIn: true, user: response.data.id });
+      } else {
+        console.log('hello')
       }
     })
-    .catch((error) => {
-      console.log(`ERROR: ${error}`);
-    });
   }
 }
 

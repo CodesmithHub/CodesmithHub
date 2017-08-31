@@ -11,7 +11,7 @@ sessionController.setJWT = (request, response, next) => {
       firstname: request.body.firstname,
       email: request.body.email
   }
-  let token = jwt.sign(user, secret, {expiresIn: 10000});
+  let token = jwt.sign(user, secret, {expiresIn: 60});
   response.cookie('token', token);
   next();
 }

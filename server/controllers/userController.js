@@ -54,10 +54,10 @@ userController.verifyUser = (request, response, next) => {
                 if (bcrypt.compareSync(request.body.password, res.rows[0].password)) {
                     request.body.return = {id: res.rows[0].user_id};
                     next();
-                } else return response.status(400).json('INCORRECT PASSWORD');
+                } else return response.status(400).send('INCORRECT PASSWORD');
             }
         })
-        .catch(err => response.status(400).json('Something went wrong: ', err));
+        // .catch(err => response.status(400).json('Something went wrong: ', err));
 }
 
 // return list of users
@@ -88,18 +88,25 @@ userController.grabUsers = (request, response) => {
 userController.editUser = (req, res) => {
   console.log('edit user body: ', req.body)
   console.log('edit user params: ', req.params)
-
+  pg.query(`
+    UPDATE users
+    SET hometown = '${req.body.hometown}', past = '${req.body.past}', future = '${req.body.future}', hobbies = '${req.body.hobbies}', random = '${req.body.random}', avatar = '${req.body.avatar}'
+    WHERE user_id = ${req.params.id}
+  `)
+  .then(() => {
+    res.send(req.body)
+  })
 }
 
 // return list of posts for a given user
 userController.grabPosts = (request, response) => {
-    pg.query({
-        name: 'grab-posts',
-        text: "SELECT userposts.post FROM userposts WHERE userposts.user = $1;",
-        values: [request.body.user_id]
-    })
-        .then(res => response.status(200).json(res.rows))
-        .catch(err => { console.log('err: ', err); response.status(400).json('Error: ', err) })
+  pg.query({
+      name: 'grab-posts',
+      text: "SELECT userposts.post FROM userposts WHERE userposts.user = $1;",
+      values: [request.body.user_id]
+  })
+    .then(res => response.status(200).json(res.rows))
+    .catch(err => { console.log('err: ', err); response.status(400).json('Error: ', err) })
 }
 
 // create new post in DB

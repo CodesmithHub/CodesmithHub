@@ -15,6 +15,6 @@ userRouter.router.post('/posts', userController.grabPosts);
 // add post to database for a given user
 userRouter.router.post('/addpost', userController.addPost);
 
-userRouter.router.patch('/all/:userID', userController.editUser);
+userRouter.router.patch('/all/:id', userController.editUser);
 
 module.exports = userRouter;

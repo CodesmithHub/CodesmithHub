@@ -7,6 +7,7 @@ import Navbar from './navbar.jsx'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import ChatBox from './chat/chatbox.jsx'
+import { Redirect } from 'react-router-dom'
 
 /**
  * Main will render the main page when a user logs in
@@ -26,6 +27,7 @@ class MainPage extends Component {
     user: {},
     selectedUser: {},
     addFeed: null,
+    logout: false,
   };
 
   changeView = (buttonName) => {
@@ -97,10 +99,19 @@ class MainPage extends Component {
     })
   }
 
+  handleLogOut = () => {
+    this.setState({
+      logout: true
+    })
+  }
   /** Render the main page based on 'selectedPage' */
   render() {
-    console.log('this state', this.state.directory);
     let feed;
+    if (this.state.logout) {
+      return (
+        <Redirect to='/' />
+      )
+    }
     // DIRECTORY
     if (this.state.selectedPage === 'Directory') {
       feed = (<Directory
@@ -120,7 +131,7 @@ class MainPage extends Component {
         random={this.state.user.random}
         avatar={this.state.user.avatar}
         edit={this.state.user}
-        userID={this.state.user.id}
+        id={this.state.user.id}
       />);
     }
 
@@ -139,7 +150,6 @@ class MainPage extends Component {
         />
       );
     }
-
     // NEWS FEED
     else if (this.state.selectedPage === 'Feed') {
       feed = <NewsFeed directory={this.state.directory} newFeed={this.state.addFeed}/>;
@@ -152,6 +162,7 @@ class MainPage extends Component {
     return (
       <div className="main-page">
         <h1> MAIN </h1>
+        <button type='submit' className='btn btn-primary rounded pi-btn-default margin-right-10' onClick={this.handleLogOut}>Log Out</button>
         <div className="list-group col-sm-2">
           <img
             className="prof-pic"
