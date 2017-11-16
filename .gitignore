@@ -1,5 +1,4 @@
 node_modules
 package-lock.json
 www/bundle.js
-bundle.js
 secret.js
