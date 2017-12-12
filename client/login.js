@@ -1,51 +1,12 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
-import SignUp from './signup.js';
-import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
-import MainPage from './mainPage.jsx';
+const React = require('react');
+const axios = require('axios');
+const { Link, Redirect } = require('react-router-dom');
 
 class LogIn extends React.Component {
-
   constructor() {
     super();
     this.state = { loggedIn: false, user: {} };
     this.loginInfo = this.loginInfo.bind(this);
-  }
-
-  render() {
-    if (this.state.loggedIn) {
-      return (
-        <Redirect to={{pathname: "/main", state: { from: this.state.user } }} />
-      )
-    }
-    
-    return (
-      <div className="login-page">
-        <table>
-          <tbody>
-            <tr>
-              <th className="header">CodesmithHub</th>
-            </tr>
-            <tr>
-              <td className="tableContent">
-                <div className="input">
-                  <form onSubmit={this.loginInfo}>
-                    <b>Email:</b> <input type="text" id="loginEmail" placeholder="email"/>
-                    <br/><br/>
-                    <b>Password:</b> <input type="password" id="loginPassword" placeholder="password"/>
-                    <br/><br/>
-                    <button type="submit">LogIn</button>
-                    <button>
-                      <Link to="/signup">Signup</Link>
-                    </button>
-                  </form>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    )
   }
 
   loginInfo(e) {
@@ -54,19 +15,57 @@ class LogIn extends React.Component {
     const data = {
       email: document.getElementById('loginEmail').value,
       password: document.getElementById('loginPassword').value,
-    }
+    };
 
     axios.post('/authenticate/validate', data)
-    .then((response) => {
-      console.log(this);
-      if (response.status === 200) {
-        this.setState({ loggedIn: true, user: response.data.id });
-      }
-    })
-    .catch((error) => {
-      console.log(`ERROR: ${error}`);
-    });
+      .then((response) => {
+        console.log(this);
+        if (response.status === 200) {
+          this.setState({ loggedIn: true, user: response.data.id });
+        }
+      })
+      .catch((error) => {
+        console.log(`ERROR: ${error}`);
+      });
+  }
+
+  render() {
+    if (this.state.loggedIn) {
+      return (
+        <Redirect to={{ pathname: '/main', state: { from: this.state.user } }} />
+      );
+    }
+    return (
+
+      <nav className="navbar navbar-inverse">
+        <div className="container">
+
+          <div className="navbar-header">
+            <a className="navbar-brand" >CodesmithHub</a>
+          </div>
+
+
+          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <form id="signin" className="navbar-form navbar-right" role="form" onSubmit={this.loginInfo}>
+              <div className="input-group">
+                <span className="input-group-addon"><i className="glyphicon glyphicon-user" /></span>
+                <input id="loginEmail" type="email" className="form-control" name="email" placeholder="email" />
+              </div>
+
+              <div className="input-group">
+                <span className="input-group-addon"><i className="glyphicon glyphicon-lock" /></span>
+                <input id="loginPassword" type="password" className="form-control" name="password" placeholder="password" />
+              </div>
+
+              <button type="submit" className="btn btn-primary">Login</button>
+              <Link to="/signup"><button type="submit" className="btn btn-primary">SignUp</button></Link>
+            </form>
+
+          </div>
+        </div>
+      </nav>
+    );
   }
 }
-
 export default LogIn;
