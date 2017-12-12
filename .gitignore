@@ -2,3 +2,4 @@ node_modules
 package-lock.json
 www/bundle.js
 secret.js
+.DS_Store
