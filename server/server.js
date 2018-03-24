@@ -2,17 +2,19 @@ const express = require('express');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const webpackConfig = require('./../webpack.config.js');
+
 const app = express();
 const { Client } = require('pg');
 // use connectionString to to connect to DB via CLI => psql connectionString
-const connectionString = 'postgres://taviagze:xhNoQjlMqnEg86XbeWnAyTN-TEl_Dqyc@stampy.db.elephantsql.com:5432/taviagze';
-const pg = new Client({ connectionString: connectionString });
+const connectionString = process.env.DB_CONNECT;
+const pg = new Client({ connectionString });
 const userController = require('./controllers/userController.js');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const sessionController = require('./controllers/sessionController.js');
 const userRouter = require('./routers/userRouter.js');
 const authenticationRouter = require('./routers/authenticationRouter.js');
+
 const compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler, {
