@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   context: path.join(__dirname, 'client'),
   entry: [
-    './main.js',
+    './',
   ],
   output: {
     path: path.join(__dirname, 'www'),
@@ -12,7 +12,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js/,
+        test: /\.jsx?$/,
         loader: 'babel-loader',
         include: path.join(__dirname, 'client'),
         exclude: /node_modules/,
@@ -27,6 +27,7 @@ module.exports = {
     ],
   },
   resolve: {
+    extensions: ['.js', '.jsx'],
     modules: [
       path.join(__dirname, 'node_modules'),
     ],
