@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class FeedItem extends Component {
+const FeedItem = props => (
+  <li className="feed-item">
+    <img src={props.imgURL} alt={`${props.username  }'s picture`} />
+    <span>{props.username}    {props.message}</span>
+  </li>
+);
 
-  render() {
-    return (
-      <li className="feed-item">
-        <img src={this.props.imgURL} alt={this.props.username + "'s picture"} />
-        <span>{this.props.username}    {this.props.message}</span>
-      </li>
-    );
-  }
-}
 
 export default FeedItem;
