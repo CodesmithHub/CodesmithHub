@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import FeedItem from './feedItem.jsx';
+import React from 'react';
+import axios from 'axios';
+import FeedItem from '../.././feedItem';
 
 /**
  * component will return a page with an image and text
@@ -7,18 +8,36 @@ import FeedItem from './feedItem.jsx';
  * Props: username, img url, bio questions[5]
  * TODO: don't hard code the imgURL (profile image)
  */
-class ProfilePage extends Component {
-
-  constructor() {
-    super();
+class Profile extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       feedItems: [],
     };
-    this.getFeedItems = this.getFeedItems.bind(this);
   }
 
-  render() {
+  componentDidMount() {
+  /**
+  * GRABS all the posts from a specific user, by sending their userID
+  */
+    console.log(`requesting posts from: ${this.props.id}  ${this.props.username}`);
 
+    axios.post('/user/posts', { user_id: this.props.id })
+      .then((res) => {
+        console.log('** recieved posts **');
+        console.log(res.data);
+        console.log('** **');
+
+        this.setState({ feedItems: res.data });
+        // this.state.feedItems = res.data;
+      })
+      .catch((err) => {
+        console.log(`ERROR: ${err}`);
+      });
+  }
+
+
+  render() {
     const imgURL = 'https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png';
     // parse feed items
     const feed = [];
@@ -39,7 +58,7 @@ class ProfilePage extends Component {
         <img
           className="profile-pic"
           alt="profile pic"
-          src='https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png'
+          src="https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/438/codesmith_logo.png"
         />
         <h1 className="username">{this.props.username}</h1>
         {feed}
@@ -58,30 +77,6 @@ class ProfilePage extends Component {
       </div>
     );
   }
-
-  componentDidMount() {
-    this.getFeedItems();
-  }
-
-  /**
-   * GRABS all the posts from a specific user, by sending their userID
-   */
-  getFeedItems() {
-    console.log(`requesting posts from: ${this.props.id}  ${this.props.username}`);
-
-    axios.post('/user/posts', { user_id: this.props.id })
-    .then((res) => {
-      console.log('** recieved posts **');
-      console.log(res.data);
-      console.log('** **');
-
-      this.setState({ feedItems: res.data });
-      // this.state.feedItems = res.data;
-    })
-    .catch((err) => {
-      console.log(`ERROR: ${err}`);
-    });
-  }
 }
 
-export default ProfilePage;
+export default Profile;

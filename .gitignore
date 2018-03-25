@@ -1,4 +1,8 @@
+# Node build artifacts
 node_modules
-package-lock.json
+npm-debug.log
+
+# Local development
+*.env
 www/bundle.js
-secret.js
+.DS_Store

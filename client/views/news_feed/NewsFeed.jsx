@@ -1,15 +1,28 @@
-import React, { Component } from 'react';
-import FeedItem from './feedItem.jsx';
+import React from 'react';
+import axios from 'axios';
+import FeedItem from '../.././feedItem';
 
-class NewsFeed extends Component {
-
+class NewsFeed extends React.Component {
   constructor() {
     super();
     this.state = {
       feedItems: [],
     };
-    this.fetchPosts = this.fetchPosts.bind(this);
   }
+  componentDidMount() {
+    /** Get the news feed from the database */
+    console.log('Fetching posts...');
+
+    axios.get('/user/allposts')
+      .then((res) => {
+        console.log(res.data);
+        this.setState({ feedItems: res.data });
+      })
+      .catch((err) => {
+        console.log(`ERROR: ${err}`);
+      });
+  }
+
 
   render() {
     const feed = [];
@@ -18,7 +31,7 @@ class NewsFeed extends Component {
     for (let i = 0; i < this.state.feedItems.length; i += 1) {
       feed.push(
         <FeedItem
-          username={this.state.feedItems[i].id} 
+          username={this.state.feedItems[i].id}
           message={this.state.feedItems[i].post}
           imgURL={imgURL}
           key={i}
@@ -33,23 +46,6 @@ class NewsFeed extends Component {
         </ul>
       </div>
     );
-  }
-
-  componentDidMount() {
-    this.fetchPosts();
-  }
-
-  /** Get the news feed from the database */
-  fetchPosts() {
-    console.log('Fetching posts...');
-    axios.get('/user/allposts')
-    .then((res) => {
-      console.log(res.data);
-      this.setState({ feedItems: res.data });
-    })
-    .catch((err) => {
-      console.log(`ERROR: ${err}`);
-    });
   }
 }
 

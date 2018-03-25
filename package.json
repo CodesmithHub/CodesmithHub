@@ -1,36 +1,41 @@
 {
+    "name": "codesmithhub",
+    "version": "1.0.0",
+    "description": "Social network for Codesmith",
     "author": "CodesmithHub",
+    "license": "ISC",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon bin/dev",
+        "compile": "webpack -w",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "devDependencies": {
+        "babel-core": "^6.26.0",
+        "babel-loader": "^7.1.4",
+        "babel-preset-latest": "^6.24.1",
+        "babel-preset-react": "^6.24.1",
+        "css-loader": "^0.28.11",
+        "style-loader": "^0.18.2"
+    },
     "dependencies": {
         "axios": "^0.16.2",
-        "babel-core": "^6.22.1",
-        "babel-loader": "^7.1.2",
-        "babel-preset-latest": "^6.22.0",
-        "babel-preset-react": "^6.22.0",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.17.2",
+        "bootstrap": "^4.0.0",
         "cookie-parser": "^1.4.3",
-        "css-loader": "^0.28.5",
+        "dotenv": "^5.0.1",
         "express": "^4.15.4",
         "history": "^4.7.2",
         "jsonwebtoken": "^7.4.3",
         "nodemon": "^1.11.0",
         "pg": "^7.2.0",
-        "react": "^15.6.1",
-        "react-dom": "^15.6.1",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0",
         "react-router-dom": "^4.2.2",
-        "style-loader": "^0.18.2",
+        "reactstrap": "^5.0.0-beta.3",
         "webpack": "^3.5.5",
         "webpack-dev-middleware": "^1.12.0"
-    },
-    "description": "Social network for Codesmith",
-    "keywords": [],
-    "license": "ISC",
-    "main": "index.js",
-    "name": "my-project",
-    "scripts": {
-        "start": "nodemon server/server.js",
-        "compile": "webpack -w",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "version": "1.0.0"
+    }
 }
