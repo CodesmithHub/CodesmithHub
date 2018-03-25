@@ -2,10 +2,10 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 
-import Directory from './../directory.jsx';
-import ProfilePage from './../profile.jsx';
-import TextField from './../textField.jsx';
-import NewsFeed from './../newsFeed.jsx';
+import Directory from './../views/directory/Directory';
+import Profile from './../views/profile/Profile';
+import NewsFeed from './../views/news_feed/NewsFeed';
+import TextField from './../textField';
 
 /**
  * Main will render the main page when a user logs in
@@ -17,7 +17,7 @@ import NewsFeed from './../newsFeed.jsx';
  * profile pic will navigate to personal profile page
  */
 
-class MainPage extends React.Component {
+class Main extends React.Component {
   constructor(props) {
     super(props);
     console.log('CONSTRUCTING MAIN');
@@ -76,7 +76,7 @@ class MainPage extends React.Component {
             exact path="/directory"
             render={() => (
               <Directory
-                listItems={this.props.directory}
+                directory={this.state.directory}
                 viewProfile={this.viewProfile}
               />
             )}
@@ -84,15 +84,15 @@ class MainPage extends React.Component {
           <Route
             exact path="/profile"
             render={() => (
-              <ProfilePage
-                username={this.props.selectedUser.username}
-                hometown={this.props.selectedUser.hometown}
-                past={this.props.selectedUser.past}
-                future={this.props.selectedUser.future}
-                hobbies={this.props.selectedUser.hobbies}
-                random={this.props.selectedUser.random}
-                imgURL={this.props.selectedUser.imgURL}
-                id={this.props.selectedUser.id}
+              <Profile
+                username={this.state.selectedUser.username}
+                hometown={this.state.selectedUser.hometown}
+                past={this.state.selectedUser.past}
+                future={this.state.selectedUser.future}
+                hobbies={this.state.selectedUser.hobbies}
+                random={this.state.selectedUser.random}
+                imgURL={this.state.selectedUser.imgURL}
+                id={this.state.selectedUser.id}
               />
             )}
           />
@@ -103,4 +103,4 @@ class MainPage extends React.Component {
 }
 
 
-export default MainPage;
+export default Main;
